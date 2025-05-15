@@ -2,8 +2,11 @@ version: '3.8'
 
 services:
   mt4:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     container_name: mt4-docker
+    hostname: mt4-docker
     volumes:
       - ./MQL4:/mt4/MQL4
       - ./logs:/mt4/logs
@@ -13,11 +16,16 @@ services:
       - MT4_LOGIN=${MT4_LOGIN}
       - MT4_PASSWORD=${MT4_PASSWORD}
       - MT4_SERVER=${MT4_SERVER}
+      - WINEDEBUG=-all
+      - LANG=C.UTF-8
+      - LC_ALL=C.UTF-8
     restart: unless-stopped
     ports:
-      - "5900:5900"  # VNC port for debugging
+      - "5900:5900"
+    networks:
+      - mt4net
     healthcheck:
-      test: ["CMD", "pgrep", "-f", "terminal.exe"]
+      test: ["CMD", "/mt4/health_check.sh"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -27,3 +35,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
+networks:
+  mt4net:
+    driver: bridge

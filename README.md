@@ -1,71 +1,115 @@
-# MT4 Docker Complete Setup
+# MT4 Docker Production v5.0
 
-This is a complete, automated MT4 Docker setup with auto-compilation and deployment.
-
-## Prerequisites
-
-- Docker and Docker Compose installed
-- MT4 terminal.exe file
-
-## Quick Start
-
-1. Copy your `terminal.exe` to this directory
-2. Configure your account in `.env`
-3. Run: `./quick_start.sh`
+Complete, production-ready MT4 Docker environment with all fixes applied.
 
 ## Features
 
-- ✅ Fully automated setup
+- ✅ Automated MT4 deployment
 - ✅ Auto-compilation of EAs
-- ✅ Auto-deployment of EAs
-- ✅ Headless operation
+- ✅ Network tools included
+- ✅ Git Bash compatible
 - ✅ VNC access for debugging
-- ✅ Monitoring scripts
-- ✅ Health checks
+- ✅ Health monitoring
+- ✅ Demo account setup helper
+- ✅ Fixed COPY command issues
+
+## Quick Start
+
+1. Run the setup:
+   ```bash
+   ./quick_start.sh
+   ```
+
+2. Copy terminal.exe (if not already done):
+   ```bash
+   ./scripts/utilities/copy_terminal.sh
+   ```
+
+3. Configure credentials:
+   ```bash
+   ./scripts/utilities/setup_demo_account.sh
+   ```
+
+4. Monitor:
+   ```bash
+   ./scripts/utilities/monitor.sh
+   ```
+
+## Directory Structure
+
+```
+mt4-docker-production/
+├── Dockerfile            # Fixed Dockerfile without COPY issues
+├── docker-compose.yml    # Container orchestration
+├── .env                 # Your MT4 credentials
+├── config/              # MT4 configuration
+├── MQL4/                # Trading files
+│   ├── Experts/         # Expert Advisors
+│   ├── Indicators/      # Custom indicators
+│   └── Scripts/         # Trading scripts
+├── logs/                # Application logs
+├── scripts/
+│   ├── troubleshooting/ # Diagnostic tools
+│   └── utilities/       # Helper scripts
+└── terminal.exe         # MT4 executable (you provide)
+```
 
 ## Scripts
 
-- `quick_start.sh` - Build and start everything
-- `check_status.sh` - Check system status
+### Utilities
 - `monitor.sh` - Real-time monitoring
-- `deploy_ea.sh` - Deploy new EAs
+- `copy_terminal.sh` - Copy terminal.exe to container
 - `connect_vnc.sh` - VNC connection
-- `view_logs.sh` - View various logs
-- `cleanup.sh` - Stop and cleanup
+- `deploy_ea.sh` - Deploy Expert Advisors
+- `setup_demo_account.sh` - Configure demo account
+- `view_logs.sh` - View logs
+- `test_system.sh` - Test system components
+- `cleanup.sh` - Docker cleanup
 
-## Architecture
+### Troubleshooting
+- `master_diagnostic.sh` - Comprehensive system check
 
-```
-Container Services:
-├── Xvfb (Virtual Display)
-├── X11VNC (VNC Server)
-├── Wine + MT4
-└── Auto-compile monitor
-```
+## Known Issues Fixed
 
-## EA Auto-Deployment
+1. **COPY command with wildcards** - Removed problematic COPY with wildcards
+2. **Terminal.exe handling** - Now copied after container starts
+3. **Dockerfile syntax** - Clean supervisor configuration
+4. **Path issues** - Git Bash compatibility
 
-The AutoDeploy_EA automatically:
-- Loads on EURUSD H1 chart
-- Writes status to files
-- Updates every 30 seconds
-- Logs all activity
+## Demo Servers
 
-## Monitoring
+Popular demo servers you can use:
+- MetaQuotes-Demo
+- ICMarkets-Demo02
+- Pepperstone-Demo01
+- XM.COM-Demo 3
+- Exness-Demo
 
-Check EA activity:
+## Common Commands
+
 ```bash
-docker exec mt4-docker cat /mt4/MQL4/Files/ea_status.log
+# Check status
+./scripts/troubleshooting/master_diagnostic.sh
+
+# Monitor in real-time
+./scripts/utilities/monitor.sh
+
+# Deploy new EA
+./scripts/utilities/deploy_ea.sh YourEA.mq4
+
+# View logs
+./scripts/utilities/view_logs.sh
+
+# Connect via VNC
+./scripts/utilities/connect_vnc.sh
 ```
 
-View logs:
-```bash
-./view_logs.sh
-```
+## Support
 
-## Troubleshooting
+1. Run diagnostic first
+2. Check terminal.exe is copied
+3. Verify credentials in .env
+4. Check network connectivity
+5. Monitor logs for errors
 
-If MT4 doesn't start:
-1. Check terminal.exe is present
-2. Verify Wine: `docker exec mt4-docker wine --version`
-3. Check logs: `./view_logs.sh`
+Version 5.0 - All issues fixed, production ready!
