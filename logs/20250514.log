@@ -1,0 +1,42 @@
+0	08:33:54.940	Migration: history folder copied from 'Z:\mt4' to 'Z:\mt4'
+0	08:33:54.942	Migration: mailbox folder copied from 'Z:\mt4' to 'Z:\mt4'
+0	08:33:54.942	Migration: profiles folder copied from 'Z:\mt4' to 'Z:\mt4'
+0	08:33:54.943	Migration: templates folder copied from 'Z:\mt4' to 'Z:\mt4'
+0	08:33:54.987	Migration: data to 'Z:\mt4' migration started
+0	08:33:54.998	Migration: data migration finished, no virtual folder
+0	08:33:55.020	LiveUpdate: update Z:\mt4\MQL4 folder started
+0	08:33:56.359	LiveUpdate: update Z:\mt4\MQL4 folder finished
+0	15:14:03.071	MetaTrader 4 build 1440 started (MetaQuotes Software Corp.)
+0	15:14:03.071	Windows 10 10.0  (Build 19043), 16 x 11th Gen Intel Core i7-11850H @ 2.50GHz, Memory: 20858 / 25448 Mb, Disk: 109 / 250 Gb, GMT+0
+0	15:14:03.071	Data Folder: Z:\mt4
+0	15:14:04.249	Sources recompilation started
+3	15:14:04.249	Compiler: you must to update the MetaEditor
+0	15:14:04.549	Sources recompilation finished (30 compiled in 314 msec)
+0	15:32:25.526	Automated trading enabled
+0	16:47:08.593	Automated trading disabled
+3	16:47:08.594	Automated trading disabled because the account has been changed
+1	16:47:16.243	'74594': connect failed [No connection]
+0	18:13:35.465	MetaTrader 4 build 1440 started (MetaQuotes Software Corp.)
+0	18:13:35.535	Windows 10 10.0  (Build 19043), 16 x 11th Gen Intel Core i7-11850H @ 2.50GHz, Memory: 20673 / 25448 Mb, Disk: 109 / 250 Gb, GMT+0
+0	18:13:35.535	Data Folder: Z:\mt4
+0	18:13:37.041	Sources recompilation started
+3	18:13:37.041	Compiler: you must to update the MetaEditor
+0	18:13:37.474	Sources recompilation finished (30 compiled in 460 msec)
+1	18:13:50.049	'74594': connect failed [No connection]
+0	18:19:12.405	'1234': ping to current access point IG-LIVE is n/a
+0	18:23:03.082	'1234': ping to current access point IG-LIVE is n/a
+0	18:46:17.855	'74594': auto connecting to a better access point mt4a.ig.com (ping is 204.69 ms)
+0	18:51:23.254	'74594': login on IG-LIVE
+0	18:51:25.223	'74594': previous successful authorization performed from 41.150.53.38
+0	18:52:44.098	MetaTrader 4 build 1440 stopped
+0	18:54:16.009	MetaTrader 4 build 1440 started (MetaQuotes Software Corp.)
+0	18:54:16.010	Windows 10 10.0  (Build 19043), 16 x 11th Gen Intel Core i7-11850H @ 2.50GHz, Memory: 20720 / 25448 Mb, Disk: 109 / 250 Gb, GMT+0
+0	18:54:16.010	Data Folder: Z:\mt4
+0	18:54:17.456	Sources recompilation started
+3	18:54:17.456	Compiler: you must to update the MetaEditor
+0	18:54:17.848	Sources recompilation finished (30 compiled in 426 msec)
+0	18:54:24.544	'74594': login on IG-LIVE through Data Centre B (ping: 208.96 ms)
+0	18:54:26.617	'74594': login datacenter on IG-LIVE through Data Centre B (ping: 208.96 ms)
+0	18:54:27.198	'74594': previous successful authorization performed from 41.150.53.38
+0	18:58:28.768	Automated trading enabled
+0	19:00:46.136	MetaTrader 4 build 1440 stopped

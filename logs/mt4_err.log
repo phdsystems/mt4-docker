@@ -1,0 +1,275 @@
+0044:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0044:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+0044:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+0024:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+0024:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+0050:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 0361FF18
+0024:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+0024:err:crypt:CRYPT_ImportSystemRootCertsToReg Failed to import system certs into registry, 00000057
+0024:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0024:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0058:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+0058:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+0058:fixme:kernelbase:AppPolicyGetProcessTerminationMethod FFFFFFFA, 0031FEC8
+0068:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0068:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+0068:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+0060:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+0060:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+0060:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+0074:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 0361FF18
+0060:err:crypt:CRYPT_ImportSystemRootCertsToReg Failed to import system certs into registry, 00000057
+0060:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0060:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0060:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0060:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0060:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0060:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+Terminated
+0068:err:ole:start_rpcss Failed to open RpcSs service
+00a8:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+00a8:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+00a8:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+00a0:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+00a0:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+00a0:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+00b4:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 0361FF18
+00a0:err:crypt:CRYPT_ImportSystemRootCertsToReg Failed to import system certs into registry, 00000057
+00a0:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+00a0:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+00a0:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+00a0:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+00a0:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+00a0:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+00a0:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+00a0:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+00a0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+00a0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+00a0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+00a0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+00a0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+00a0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+00a0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+00a0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+00a0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+00a0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+00a0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+00a0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+00a0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+00a0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+00c4:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+00b8:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+00d4:err:ole:start_rpcss Failed to open RpcSs service
+00d4:err:ole:create_server class {9ba05972-f6a8-11cf-a442-00a0c90a8f39} not registered
+00d4:err:ole:com_get_class_object no class object {9ba05972-f6a8-11cf-a442-00a0c90a8f39} could be created for context 0x4
+00d4:err:ole:com_get_class_object class {71f96385-ddd6-48d3-a0c1-ae06e8b055fb} not registered
+00d4:err:ole:com_get_class_object no class object {71f96385-ddd6-48d3-a0c1-ae06e8b055fb} could be created for context 0x1
+00d4:err:explorer:make_explorer_window Could not obtain an instance of IExplorerBrowser
+wine: Unhandled page fault on read access to 00000000 at address 0040E936 (thread 00d4), starting debugger...
+00e4:fixme:dbghelp:elf_search_auxv can't find symbol in module
+00e4:fixme:dbghelp:elf_search_auxv can't find symbol in module
+00a0:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+00a0:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+00a0:err:ole:com_get_class_object no class object {8856f961-340a-11d0-a96b-00c04fd705a2} could be created for context 0x3
+00a0:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+00a0:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+00a0:err:ole:com_get_class_object no class object {8856f961-340a-11d0-a96b-00c04fd705a2} could be created for context 0x3
+X connection to :99 broken (explicit kill or server shutdown).
+X connection to :99 broken (explicit kill or server shutdown).
+0108:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0108:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+0108:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+0100:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+0100:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+0100:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+0114:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 0361FF18
+0100:err:crypt:CRYPT_ImportSystemRootCertsToReg Failed to import system certs into registry, 00000057
+0100:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0100:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0100:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0100:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0100:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0100:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0100:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0100:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0100:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0100:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0100:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0100:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0100:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0100:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0100:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0100:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0100:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0100:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0100:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0100:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0100:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0100:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0118:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+0120:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+012c:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+012c:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+012c:fixme:kernelbase:AppPolicyGetProcessTerminationMethod FFFFFFFA, 0031FEC8
+Terminated
+0108:err:ole:start_rpcss Failed to open RpcSs service
+0170:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0170:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+0170:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+0168:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+0168:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+017c:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 0361FF18
+0168:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+0168:err:crypt:CRYPT_ImportSystemRootCertsToReg Failed to import system certs into registry, 00000057
+0168:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0168:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0168:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0168:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0168:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0168:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0168:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0168:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0168:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0168:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0168:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0168:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0168:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0168:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0168:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0168:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0168:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0168:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0168:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0168:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0168:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0168:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0180:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+0188:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+0194:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+0194:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+0194:fixme:kernelbase:AppPolicyGetProcessTerminationMethod FFFFFFFA, 0031FEC8
+Terminated
+0170:err:ole:start_rpcss Failed to open RpcSs service
+01d8:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+01d8:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+01d8:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+01d0:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+01d0:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+01e4:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 0361FF18
+01d0:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+01d0:err:crypt:CRYPT_ImportSystemRootCertsToReg Failed to import system certs into registry, 00000057
+01d0:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+01d0:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+01d0:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+01d0:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+01d0:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+01d0:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+01d0:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+01d0:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+01d0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+01d0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+01d0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+01d0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+01d0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+01d0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+01d0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+01d0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+01d0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+01d0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+01d0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+01d0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+01d0:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+01d0:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+01e8:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+01f0:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+0204:err:ole:start_rpcss Failed to open RpcSs service
+0204:err:ole:create_server class {9ba05972-f6a8-11cf-a442-00a0c90a8f39} not registered
+0204:err:ole:com_get_class_object no class object {9ba05972-f6a8-11cf-a442-00a0c90a8f39} could be created for context 0x4
+0204:err:ole:com_get_class_object class {71f96385-ddd6-48d3-a0c1-ae06e8b055fb} not registered
+0204:err:ole:com_get_class_object no class object {71f96385-ddd6-48d3-a0c1-ae06e8b055fb} could be created for context 0x1
+0204:err:explorer:make_explorer_window Could not obtain an instance of IExplorerBrowser
+wine: Unhandled page fault on read access to 00000000 at address 0040E936 (thread 0204), starting debugger...
+0214:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0214:fixme:dbghelp:elf_search_auxv can't find symbol in module
+0234:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+0278:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+01d0:fixme:kernelbase:AppPolicyGetProcessTerminationMethod FFFFFFFA, 0031FEC8
+01d8:err:ole:start_rpcss Failed to open RpcSs service
+0298:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0298:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+0298:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+0290:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+0290:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+0290:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+02a4:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 0361FF18
+0290:err:crypt:CRYPT_ImportSystemRootCertsToReg Failed to import system certs into registry, 00000057
+0290:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0290:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0290:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0290:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0290:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0290:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0290:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0290:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0290:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0290:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0290:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0290:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0290:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0290:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0290:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0290:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0290:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0290:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0290:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0290:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0290:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0290:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+02a8:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e
+0290:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+0290:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+0290:err:ole:com_get_class_object no class object {8856f961-340a-11d0-a96b-00c04fd705a2} could be created for context 0x3
+0290:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+0290:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+0290:err:ole:com_get_class_object no class object {8856f961-340a-11d0-a96b-00c04fd705a2} could be created for context 0x3
+0290:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+0290:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+0290:err:ole:com_get_class_object no class object {8856f961-340a-11d0-a96b-00c04fd705a2} could be created for context 0x3
+0290:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+0290:err:ole:com_get_class_object class {8856f961-340a-11d0-a96b-00c04fd705a2} not registered
+0290:err:ole:com_get_class_object no class object {8856f961-340a-11d0-a96b-00c04fd705a2} could be created for context 0x3
+0290:fixme:win:NtUserLockWindowUpdate (0xe02e0), partial stub!
+0290:fixme:win:NtUserLockWindowUpdate ((nil)), partial stub!
+0290:fixme:kernelbase:AppPolicyGetProcessTerminationMethod FFFFFFFA, 0031FEC8
+0298:err:ole:start_rpcss Failed to open RpcSs service
+0044:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0044:err:ole:CoMarshalInterface Failed to marshal the interface {6d5140c1-7436-11ce-8034-00aa006009fa}, hr 0x80004002
+0044:err:ole:apartment_get_local_server_stream Failed: 0x80004002
+0024:fixme:nls:RtlGetThreadPreferredUILanguages 00000038, 0031F0D8, 0031F0E8 0031F0DC
+0024:fixme:nls:get_dummy_preferred_ui_language (0x38 0x409 0031F0D8 0031F0E8 0031F0DC) returning a dummy value (current locale)
+0024:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+0050:fixme:kernelbase:AppPolicyGetThreadInitializationType FFFFFFFA, 0361FF18
+0024:err:crypt:CRYPT_ImportSystemRootCertsToReg Failed to import system certs into registry, 00000057
+0024:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0024:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0024:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0024:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0024:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0024:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0024:err:toolbar:ToolbarWindowProc unknown msg 0465, wp 0, lp 31e2e8
+0024:err:toolbar:ToolbarWindowProc unknown msg 0466, wp 0, lp 31e2e8
+0024:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0024:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0024:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0024:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0024:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0024:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0024:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0024:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0024:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0024:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0024:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0024:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0024:err:ole:StdMarshalImpl_MarshalInterface Failed to create ifstub, hr 0x80004002
+0024:err:ole:CoMarshalInterface Failed to marshal the interface {00000122-0000-0000-c000-000000000046}, hr 0x80004002
+0060:fixme:secur32:schan_QueryContextAttributesA Unhandled attribute 0x6e

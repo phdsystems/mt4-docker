@@ -1,0 +1,444 @@
+2025-05-14 08:14:23,198 INFO Set uid to user 0 succeeded
+2025-05-14 08:14:23,201 INFO supervisord started with pid 1
+2025-05-14 08:14:24,210 INFO spawned: 'xvfb' with pid 8
+2025-05-14 08:14:24,215 INFO spawned: 'x11vnc' with pid 9
+2025-05-14 08:14:24,221 INFO spawned: 'mt4' with pid 10
+2025-05-14 08:14:24,226 INFO spawned: 'auto-compile' with pid 12
+2025-05-14 08:14:24,227 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 08:14:25,373 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 08:14:25,373 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 08:14:34,289 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 08:33:55,526 INFO reaped unknown pid 525
+2025-05-14 08:33:59,563 INFO reaped unknown pid 541
+2025-05-14 08:33:59,563 INFO reaped unknown pid 543
+2025-05-14 08:33:59,563 INFO reaped unknown pid 545
+2025-05-14 08:33:59,564 INFO reaped unknown pid 547
+2025-05-14 08:33:59,564 INFO reaped unknown pid 549
+2025-05-14 08:33:59,564 INFO reaped unknown pid 551
+2025-05-14 11:33:55,338 INFO reaped unknown pid 5263
+2025-05-14 11:34:05,707 INFO reaped unknown pid 535
+2025-05-14 11:34:09,765 INFO reaped unknown pid 523
+2025-05-14 11:34:09,765 INFO reaped unknown pid 527
+2025-05-14 11:38:47,569 INFO reaped unknown pid 5640
+2025-05-14 11:38:51,642 INFO reaped unknown pid 5638
+2025-05-14 11:38:51,642 INFO reaped unknown pid 5642
+2025-05-14 11:45:44,650 INFO reaped unknown pid 6435
+2025-05-14 11:45:47,681 INFO reaped unknown pid 6437
+2025-05-14 11:45:48,696 INFO reaped unknown pid 6433
+2025-05-14 14:18:49,317 INFO reaped unknown pid 8896
+2025-05-14 14:35:00,469 INFO reaped unknown pid 8902
+2025-05-14 14:35:03,519 INFO reaped unknown pid 8898
+2025-05-14 14:35:04,558 INFO reaped unknown pid 8894
+2025-05-14 15:03:22,922 INFO Included extra file "/etc/supervisor/conf.d/supervisord.conf" during parsing
+2025-05-14 15:03:22,922 INFO Set uid to user 0 succeeded
+2025-05-14 15:03:22,926 INFO RPC interface 'supervisor' initialized
+2025-05-14 15:03:22,926 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2025-05-14 15:03:22,927 INFO supervisord started with pid 10068
+2025-05-14 15:03:23,941 INFO spawned: 'xvfb' with pid 10070
+2025-05-14 15:03:23,944 INFO spawned: 'x11vnc' with pid 10071
+2025-05-14 15:03:23,947 INFO spawned: 'mt4' with pid 10072
+2025-05-14 15:03:23,949 INFO spawned: 'auto-compile' with pid 10073
+2025-05-14 15:03:23,951 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 15:03:23,959 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:03:25,383 INFO spawned: 'xvfb' with pid 10077
+2025-05-14 15:03:25,383 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:03:25,388 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:03:27,424 INFO spawned: 'xvfb' with pid 10083
+2025-05-14 15:03:27,429 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:03:29,580 INFO reaped unknown pid 10120
+2025-05-14 15:03:30,642 INFO spawned: 'xvfb' with pid 10136
+2025-05-14 15:03:30,647 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:03:30,648 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 15:03:31,453 INFO waiting for mt4 to stop
+2025-05-14 15:03:31,454 INFO stopped: mt4 (terminated by SIGTERM)
+2025-05-14 15:03:31,460 INFO spawned: 'mt4' with pid 10143
+2025-05-14 15:03:42,016 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 15:04:31,294 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 15:04:31,336 INFO exited: xvfb (exit status 0; expected)
+2025-05-14 15:04:31,336 INFO reaped unknown pid 10116
+2025-05-14 15:04:31,538 INFO spawned: 'xvfb' with pid 10239
+2025-05-14 15:04:31,540 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 15:04:31,545 INFO spawned: 'x11vnc' with pid 10240
+2025-05-14 15:04:32,093 INFO reaped unknown pid 10249
+2025-05-14 15:04:32,302 INFO spawned: 'x11vnc' with pid 10250
+2025-05-14 15:04:33,123 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:04:33,124 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:04:33,694 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:04:34,729 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 15:04:34,729 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 15:04:35,755 INFO spawned: 'x11vnc' with pid 10266
+2025-05-14 15:04:35,773 INFO spawned: 'x11vnc' with pid 10267
+2025-05-14 15:04:37,150 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:04:37,181 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:09,789 INFO Set uid to user 0 succeeded
+2025-05-14 15:13:09,791 INFO supervisord started with pid 10580
+2025-05-14 15:13:10,809 INFO spawned: 'xvfb' with pid 10582
+2025-05-14 15:13:10,812 INFO spawned: 'x11vnc' with pid 10583
+2025-05-14 15:13:10,815 INFO spawned: 'mt4' with pid 10584
+2025-05-14 15:13:10,817 INFO spawned: 'auto-compile' with pid 10585
+2025-05-14 15:13:10,818 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:13:10,819 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 15:13:12,160 INFO spawned: 'xvfb' with pid 10589
+2025-05-14 15:13:12,161 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:12,164 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:13:14,218 INFO spawned: 'xvfb' with pid 10590
+2025-05-14 15:13:14,223 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:13:17,486 INFO spawned: 'xvfb' with pid 10631
+2025-05-14 15:13:17,490 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:13:17,491 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 15:13:19,715 INFO reaped unknown pid 10625
+2025-05-14 15:13:21,285 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 15:13:46,736 INFO exited: xvfb (exit status 0; expected)
+2025-05-14 15:13:46,736 INFO reaped unknown pid 10651
+2025-05-14 15:13:46,737 INFO reaped unknown pid 10654
+2025-05-14 15:13:46,841 INFO spawned: 'xvfb' with pid 10703
+2025-05-14 15:13:46,841 INFO reaped unknown pid 10265
+2025-05-14 15:13:46,842 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 15:13:46,845 INFO spawned: 'x11vnc' with pid 10704
+2025-05-14 15:13:46,957 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 15:13:46,987 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 15:13:47,990 INFO spawned: 'x11vnc' with pid 10714
+2025-05-14 15:13:48,002 INFO spawned: 'x11vnc' with pid 10715
+2025-05-14 15:13:48,176 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:48,176 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:48,177 INFO reaped unknown pid 10713
+2025-05-14 15:13:49,334 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:49,392 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:50,052 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 15:13:50,052 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 15:13:50,052 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 15:13:51,061 INFO spawned: 'x11vnc' with pid 10731
+2025-05-14 15:13:51,087 INFO spawned: 'x11vnc' with pid 10732
+2025-05-14 15:13:51,088 INFO spawned: 'x11vnc' with pid 10733
+2025-05-14 15:13:52,446 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:52,478 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:52,487 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:56,396 INFO Set uid to user 0 succeeded
+2025-05-14 15:13:56,398 INFO supervisord started with pid 10742
+2025-05-14 15:13:57,550 INFO spawned: 'xvfb' with pid 10749
+2025-05-14 15:13:57,555 INFO spawned: 'x11vnc' with pid 10750
+2025-05-14 15:13:57,557 INFO spawned: 'mt4' with pid 10751
+2025-05-14 15:13:57,559 INFO spawned: 'auto-compile' with pid 10752
+2025-05-14 15:13:57,560 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:13:57,563 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 15:13:58,900 INFO spawned: 'xvfb' with pid 10756
+2025-05-14 15:13:58,901 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 15:13:58,905 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:14:00,962 INFO spawned: 'xvfb' with pid 10762
+2025-05-14 15:14:00,968 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:14:04,113 INFO spawned: 'xvfb' with pid 10801
+2025-05-14 15:14:04,119 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 15:14:04,120 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 15:14:07,960 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 17:08:50,463 INFO reaped unknown pid 16010
+2025-05-14 17:08:50,466 INFO reaped unknown pid 16014
+2025-05-14 17:08:50,467 INFO reaped unknown pid 16016
+2025-05-14 17:20:05,130 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 17:20:05,153 INFO reaped unknown pid 10797
+2025-05-14 17:20:05,155 INFO exited: xvfb (exit status 0; expected)
+2025-05-14 17:20:05,173 INFO spawned: 'xvfb' with pid 16526
+2025-05-14 17:20:05,177 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 17:20:05,190 INFO spawned: 'x11vnc' with pid 16527
+2025-05-14 17:20:05,263 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 17:20:05,277 INFO spawned: 'x11vnc' with pid 16528
+2025-05-14 17:20:06,121 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 17:20:06,168 INFO spawned: 'x11vnc' with pid 16537
+2025-05-14 17:20:06,928 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:06,929 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:06,930 INFO reaped unknown pid 10730
+2025-05-14 17:20:06,932 INFO reaped unknown pid 16538
+2025-05-14 17:20:06,955 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:07,159 INFO spawned: 'x11vnc' with pid 16539
+2025-05-14 17:20:07,619 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:08,591 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:09,591 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 17:20:09,591 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 17:20:09,591 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 17:20:09,591 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 17:20:10,637 INFO spawned: 'x11vnc' with pid 16555
+2025-05-14 17:20:10,637 INFO spawned: 'x11vnc' with pid 16556
+2025-05-14 17:20:10,644 INFO spawned: 'x11vnc' with pid 16558
+2025-05-14 17:20:10,644 INFO spawned: 'x11vnc' with pid 16557
+2025-05-14 17:20:12,089 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:12,091 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:12,108 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:12,203 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:17,852 INFO Set uid to user 0 succeeded
+2025-05-14 17:20:17,859 INFO supervisord started with pid 16571
+2025-05-14 17:20:18,882 INFO spawned: 'xvfb' with pid 16580
+2025-05-14 17:20:18,888 INFO spawned: 'x11vnc' with pid 16581
+2025-05-14 17:20:18,893 INFO spawned: 'mt4' with pid 16582
+2025-05-14 17:20:18,899 INFO spawned: 'auto-compile' with pid 16583
+2025-05-14 17:20:18,901 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 17:20:18,904 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 17:20:20,343 INFO spawned: 'xvfb' with pid 16587
+2025-05-14 17:20:20,345 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:20:20,351 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 17:20:22,510 INFO spawned: 'xvfb' with pid 16588
+2025-05-14 17:20:22,526 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 17:20:25,770 INFO spawned: 'xvfb' with pid 16626
+2025-05-14 17:20:25,782 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 17:20:25,785 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 17:20:29,154 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 17:32:09,248 INFO Set uid to user 0 succeeded
+2025-05-14 17:32:09,252 INFO supervisord started with pid 17418
+2025-05-14 17:32:10,262 INFO spawned: 'xvfb' with pid 17420
+2025-05-14 17:32:10,268 INFO spawned: 'x11vnc' with pid 17421
+2025-05-14 17:32:10,272 INFO spawned: 'mt4' with pid 17422
+2025-05-14 17:32:10,278 INFO spawned: 'auto-compile' with pid 17424
+2025-05-14 17:32:10,280 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 17:32:10,283 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 17:32:11,689 INFO spawned: 'xvfb' with pid 17427
+2025-05-14 17:32:11,689 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 17:32:11,695 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 17:32:13,770 INFO spawned: 'xvfb' with pid 17428
+2025-05-14 17:32:13,780 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 17:32:17,437 INFO spawned: 'xvfb' with pid 17469
+2025-05-14 17:32:17,444 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 17:32:17,446 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 17:32:19,904 INFO reaped unknown pid 16623
+2025-05-14 17:32:20,523 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 18:09:46,926 INFO exited: xvfb (exit status 0; expected)
+2025-05-14 18:09:46,927 INFO reaped unknown pid 17493
+2025-05-14 18:09:46,927 INFO reaped unknown pid 17496
+2025-05-14 18:09:46,986 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:09:46,986 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:09:47,045 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:09:47,081 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:09:47,132 INFO spawned: 'xvfb' with pid 19916
+2025-05-14 18:09:47,133 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:09:47,134 INFO reaped unknown pid 16554
+2025-05-14 18:09:47,136 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:09:47,144 INFO spawned: 'x11vnc' with pid 19917
+2025-05-14 18:09:48,033 INFO spawned: 'x11vnc' with pid 19927
+2025-05-14 18:09:48,041 INFO spawned: 'x11vnc' with pid 19928
+2025-05-14 18:09:48,092 INFO spawned: 'x11vnc' with pid 19929
+2025-05-14 18:09:48,114 INFO spawned: 'x11vnc' with pid 19930
+2025-05-14 18:09:48,185 INFO spawned: 'x11vnc' with pid 19931
+2025-05-14 18:09:48,792 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:48,793 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:48,794 INFO reaped unknown pid 19926
+2025-05-14 18:09:49,487 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:49,487 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:49,487 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:49,534 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:49,539 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:50,650 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:09:50,650 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:09:50,650 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:09:50,650 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:09:50,650 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:09:50,650 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:09:51,663 INFO spawned: 'x11vnc' with pid 19947
+2025-05-14 18:09:51,685 INFO spawned: 'x11vnc' with pid 19948
+2025-05-14 18:09:51,692 INFO spawned: 'x11vnc' with pid 19949
+2025-05-14 18:09:51,708 INFO spawned: 'x11vnc' with pid 19950
+2025-05-14 18:09:51,708 INFO spawned: 'x11vnc' with pid 19951
+2025-05-14 18:09:51,709 INFO spawned: 'x11vnc' with pid 19952
+2025-05-14 18:09:53,087 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:53,144 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:53,169 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:53,177 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:53,261 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:53,269 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:57,231 INFO Set uid to user 0 succeeded
+2025-05-14 18:09:57,234 INFO supervisord started with pid 19963
+2025-05-14 18:09:58,286 INFO spawned: 'xvfb' with pid 19970
+2025-05-14 18:09:58,293 INFO spawned: 'x11vnc' with pid 19971
+2025-05-14 18:09:58,298 INFO spawned: 'mt4' with pid 19972
+2025-05-14 18:09:58,303 INFO spawned: 'auto-compile' with pid 19974
+2025-05-14 18:09:58,305 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:09:58,309 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 18:09:59,824 INFO spawned: 'xvfb' with pid 19977
+2025-05-14 18:09:59,825 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:09:59,831 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:10:01,921 INFO spawned: 'xvfb' with pid 19978
+2025-05-14 18:10:01,927 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:10:05,650 INFO spawned: 'xvfb' with pid 20017
+2025-05-14 18:10:05,657 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:10:05,658 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 18:10:08,308 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 18:11:54,263 INFO Set uid to user 0 succeeded
+2025-05-14 18:11:54,266 INFO supervisord started with pid 20383
+2025-05-14 18:11:55,306 INFO spawned: 'xvfb' with pid 20401
+2025-05-14 18:11:55,311 INFO spawned: 'x11vnc' with pid 20402
+2025-05-14 18:11:55,317 INFO spawned: 'mt4' with pid 20403
+2025-05-14 18:11:55,323 INFO spawned: 'auto-compile' with pid 20405
+2025-05-14 18:11:55,324 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:11:55,328 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 18:11:56,945 INFO spawned: 'xvfb' with pid 20408
+2025-05-14 18:11:56,947 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:11:56,951 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:11:59,028 INFO spawned: 'xvfb' with pid 20409
+2025-05-14 18:11:59,033 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:12:02,167 INFO spawned: 'xvfb' with pid 20446
+2025-05-14 18:12:02,176 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:12:02,177 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 18:12:04,314 INFO reaped unknown pid 20013
+2025-05-14 18:12:06,274 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 18:13:17,832 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:13:17,841 INFO exited: xvfb (exit status 0; expected)
+2025-05-14 18:13:17,842 INFO reaped unknown pid 20469
+2025-05-14 18:13:17,843 INFO reaped unknown pid 20466
+2025-05-14 18:13:17,851 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:13:17,858 INFO spawned: 'x11vnc' with pid 20694
+2025-05-14 18:13:17,868 INFO exited: x11vnc (exit status 1; not expected)
+2025-05-14 18:13:17,953 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:13:17,982 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:13:18,058 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:13:18,061 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:13:18,077 INFO spawned: 'xvfb' with pid 20695
+2025-05-14 18:13:18,078 INFO reaped unknown pid 19946
+2025-05-14 18:13:18,079 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:13:18,085 INFO spawned: 'x11vnc' with pid 20696
+2025-05-14 18:13:18,102 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:13:18,839 INFO spawned: 'x11vnc' with pid 20706
+2025-05-14 18:13:18,878 INFO spawned: 'x11vnc' with pid 20707
+2025-05-14 18:13:19,012 INFO spawned: 'x11vnc' with pid 20708
+2025-05-14 18:13:19,041 INFO spawned: 'x11vnc' with pid 20709
+2025-05-14 18:13:19,087 INFO spawned: 'x11vnc' with pid 20710
+2025-05-14 18:13:19,104 INFO spawned: 'x11vnc' with pid 20711
+2025-05-14 18:13:19,129 INFO spawned: 'x11vnc' with pid 20712
+2025-05-14 18:13:19,639 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:19,640 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:19,641 INFO reaped unknown pid 20705
+2025-05-14 18:13:20,290 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:20,434 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:20,538 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:20,569 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:20,610 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:20,619 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:20,634 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:21,337 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:13:21,337 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:13:21,338 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:13:21,338 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:13:21,338 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:13:21,338 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:13:21,338 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:13:21,338 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:13:21,346 INFO spawned: 'x11vnc' with pid 20725
+2025-05-14 18:13:21,346 INFO spawned: 'x11vnc' with pid 20726
+2025-05-14 18:13:21,346 INFO spawned: 'x11vnc' with pid 20727
+2025-05-14 18:13:21,346 INFO spawned: 'x11vnc' with pid 20729
+2025-05-14 18:13:21,346 INFO spawned: 'x11vnc' with pid 20728
+2025-05-14 18:13:21,347 INFO spawned: 'x11vnc' with pid 20731
+2025-05-14 18:13:21,347 INFO spawned: 'x11vnc' with pid 20732
+2025-05-14 18:13:21,347 INFO spawned: 'x11vnc' with pid 20730
+2025-05-14 18:13:22,689 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:22,769 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:22,785 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:22,789 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:22,806 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:22,819 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:22,913 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:23,263 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:28,389 INFO Set uid to user 0 succeeded
+2025-05-14 18:13:28,392 INFO supervisord started with pid 20752
+2025-05-14 18:13:29,434 INFO spawned: 'xvfb' with pid 20761
+2025-05-14 18:13:29,440 INFO spawned: 'x11vnc' with pid 20762
+2025-05-14 18:13:29,446 INFO spawned: 'mt4' with pid 20763
+2025-05-14 18:13:29,451 INFO spawned: 'auto-compile' with pid 20765
+2025-05-14 18:13:29,453 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:13:29,456 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 18:13:30,944 INFO spawned: 'xvfb' with pid 20768
+2025-05-14 18:13:30,945 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:13:30,953 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:13:33,038 INFO spawned: 'xvfb' with pid 20769
+2025-05-14 18:13:33,045 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:13:36,574 INFO spawned: 'xvfb' with pid 20808
+2025-05-14 18:13:36,580 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:13:36,582 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 18:13:40,304 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 18:19:38,968 INFO reaped unknown pid 21321
+2025-05-14 18:19:55,518 INFO reaped unknown pid 21325
+2025-05-14 18:19:55,519 INFO reaped unknown pid 21327
+2025-05-14 18:52:45,255 INFO reaped unknown pid 20804
+2025-05-14 18:53:58,373 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:58,380 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:58,395 INFO exited: xvfb (exit status 0; expected)
+2025-05-14 18:53:58,396 INFO reaped unknown pid 20741
+2025-05-14 18:53:58,452 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:58,479 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:58,482 INFO spawned: 'xvfb' with pid 24204
+2025-05-14 18:53:58,483 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:58,487 INFO spawned: 'x11vnc' with pid 24205
+2025-05-14 18:53:58,510 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:58,530 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:58,549 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:58,560 INFO exited: x11vnc (exit status 3; not expected)
+2025-05-14 18:53:59,393 INFO spawned: 'x11vnc' with pid 24215
+2025-05-14 18:53:59,420 INFO spawned: 'x11vnc' with pid 24216
+2025-05-14 18:53:59,490 INFO spawned: 'x11vnc' with pid 24217
+2025-05-14 18:53:59,491 INFO spawned: 'x11vnc' with pid 24218
+2025-05-14 18:53:59,540 INFO spawned: 'x11vnc' with pid 24219
+2025-05-14 18:53:59,551 INFO spawned: 'x11vnc' with pid 24220
+2025-05-14 18:53:59,570 INFO spawned: 'x11vnc' with pid 24221
+2025-05-14 18:53:59,571 INFO spawned: 'x11vnc' with pid 24222
+2025-05-14 18:54:00,115 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:00,116 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:00,117 INFO reaped unknown pid 24214
+2025-05-14 18:54:00,719 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:00,899 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:00,950 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:00,979 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:01,020 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:01,047 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:01,125 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:01,187 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:01,996 INFO exited: x11vnc (exit status 2; not expected)
+2025-05-14 18:54:02,007 INFO spawned: 'x11vnc' with pid 24229
+2025-05-14 18:54:02,007 INFO spawned: 'x11vnc' with pid 24230
+2025-05-14 18:54:02,007 INFO spawned: 'x11vnc' with pid 24231
+2025-05-14 18:54:02,008 INFO spawned: 'x11vnc' with pid 24233
+2025-05-14 18:54:02,008 INFO spawned: 'x11vnc' with pid 24232
+2025-05-14 18:54:02,008 INFO spawned: 'x11vnc' with pid 24234
+2025-05-14 18:54:02,825 INFO spawned: 'x11vnc' with pid 24245
+2025-05-14 18:54:03,008 INFO spawned: 'x11vnc' with pid 24247
+2025-05-14 18:54:03,023 INFO spawned: 'x11vnc' with pid 24248
+2025-05-14 18:54:03,415 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:03,523 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:03,559 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:03,570 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:03,571 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:03,572 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:04,402 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:04,480 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:04,585 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:08,744 INFO Set uid to user 0 succeeded
+2025-05-14 18:54:08,748 INFO supervisord started with pid 24255
+2025-05-14 18:54:09,769 INFO spawned: 'xvfb' with pid 24262
+2025-05-14 18:54:09,773 INFO spawned: 'x11vnc' with pid 24263
+2025-05-14 18:54:09,777 INFO spawned: 'mt4' with pid 24264
+2025-05-14 18:54:09,782 INFO spawned: 'auto-compile' with pid 24265
+2025-05-14 18:54:09,784 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:54:09,787 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-14 18:54:11,259 INFO spawned: 'xvfb' with pid 24269
+2025-05-14 18:54:11,260 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-14 18:54:11,267 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:54:13,348 INFO spawned: 'xvfb' with pid 24272
+2025-05-14 18:54:13,354 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:54:17,022 INFO spawned: 'xvfb' with pid 24317
+2025-05-14 18:54:17,028 INFO exited: xvfb (exit status 1; not expected)
+2025-05-14 18:54:17,030 INFO gave up: xvfb entered FATAL state, too many start retries too quickly
+2025-05-14 18:54:19,859 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
+2025-05-14 19:00:47,940 INFO reaped unknown pid 24307
+2025-05-15 14:38:59,369 INFO Set uid to user 0 succeeded
+2025-05-15 14:38:59,374 INFO supervisord started with pid 1
+2025-05-15 14:39:00,382 INFO spawned: 'xvfb' with pid 8
+2025-05-15 14:39:00,389 INFO spawned: 'x11vnc' with pid 9
+2025-05-15 14:39:00,396 INFO spawned: 'mt4' with pid 10
+2025-05-15 14:39:00,405 INFO spawned: 'auto-compile' with pid 11
+2025-05-15 14:39:00,415 INFO success: auto-compile entered RUNNING state, process has stayed up for > than 0 seconds (startsecs)
+2025-05-15 14:39:01,710 INFO success: xvfb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-15 14:39:01,713 INFO success: x11vnc entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-05-15 14:39:07,281 INFO reaped unknown pid 53
+2025-05-15 14:39:10,609 INFO success: mt4 entered RUNNING state, process has stayed up for > than 10 seconds (startsecs)
