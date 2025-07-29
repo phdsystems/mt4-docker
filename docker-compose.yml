@@ -7,7 +7,7 @@ services:
     volumes:
       - ./MQL4:/mt4/MQL4
       - ./logs:/mt4/logs
-      - ./config:/mt4/config
+      - ./config/mt4:/mt4/config
     environment:
       - DISPLAY=:99
       - MT4_LOGIN=${MT4_LOGIN}

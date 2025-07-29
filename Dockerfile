@@ -49,10 +49,10 @@ RUN mkdir -p /mt4/MQL4/Experts \
     /mt4/logs
 
 # Copy configuration files
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY config/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY scripts/start.sh /start.sh
 COPY scripts/auto-compile.sh /auto-compile.sh
-COPY config/server-config.ini /mt4/config/server-config.ini
+COPY config/mt4/server-config.ini /mt4/config/server-config.ini
 
 # Copy MT4 files
 COPY terminal.exe /mt4/terminal.exe

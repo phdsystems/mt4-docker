@@ -1,75 +1,161 @@
-# MT4 Docker Complete Setup
+# MT4 Docker - Automated Trading Platform
 
-This is a complete, automated MT4 Docker setup with auto-compilation and deployment.
+A complete Dockerized MetaTrader 4 setup for automated trading with headless operation support.
 
-## Prerequisites
+## 📋 Prerequisites
 
 - Docker and Docker Compose installed
-- MT4 terminal.exe file (see [GET_DEMO_MT4.md](GET_DEMO_MT4.md) for demo options)
+- MT4 terminal.exe file (see [docs/guides/GET_DEMO_MT4.md](docs/guides/GET_DEMO_MT4.md))
+- Trading account credentials
 
-## Quick Start
+## 🚀 Quick Start
 
-1. Copy your `terminal.exe` to this directory
-2. Copy `.env.example` to `.env` and configure your account
-3. Run: `./quick_start.sh`
-
-For detailed setup instructions, see [SETUP.md](SETUP.md).
-For troubleshooting help, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
-For VNC access guide, see [VNC_GUIDE.md](VNC_GUIDE.md).
-
-## Features
-
-- ✅ Fully automated setup
-- ✅ Auto-compilation of EAs
-- ✅ Auto-deployment of EAs
-- ✅ Headless operation
-- ✅ VNC access for debugging
-- ✅ Monitoring scripts
-- ✅ Health checks
-
-## Scripts
-
-- `quick_start.sh` - Build and start everything
-- `check_status.sh` - Check system status
-- `monitor.sh` - Real-time monitoring
-- `deploy_ea.sh` - Deploy new EAs
-- `connect_vnc.sh` - VNC connection
-- `view_logs.sh` - View various logs
-- `cleanup.sh` - Stop and cleanup
-
-## Architecture
-
-```
-Container Services:
-├── Xvfb (Virtual Display)
-├── X11VNC (VNC Server)
-├── Wine + MT4
-└── Auto-compile monitor
-```
-
-## EA Auto-Deployment
-
-The AutoDeploy_EA automatically:
-- Loads on EURUSD H1 chart
-- Writes status to files
-- Updates every 30 seconds
-- Logs all activity
-
-## Monitoring
-
-Check EA activity:
 ```bash
-docker exec mt4-docker cat /mt4/MQL4/Files/ea_status.log
+# 1. Copy your terminal.exe to project root
+cp /path/to/terminal.exe .
+
+# 2. Configure your account
+cp .env.example .env
+nano .env  # Add your credentials
+
+# 3. Build and start
+./bin/quick_start.sh
 ```
 
-View logs:
+## 📁 Project Structure
+
+```
+mt4-docker/
+├── bin/                    # Executable scripts
+│   ├── quick_start.sh     # Build and start everything
+│   ├── check_status.sh    # Check system status
+│   ├── monitor.sh         # Real-time monitoring
+│   ├── deploy_ea.sh       # Deploy new EAs
+│   └── ...
+├── config/                 # Configuration files
+│   ├── docker/            # Docker configs
+│   └── mt4/              # MT4 configs
+├── docs/                   # Documentation
+│   └── guides/           # Setup and usage guides
+├── MQL4/                  # MT4 trading files
+│   ├── Experts/          # Expert Advisors
+│   ├── Indicators/       # Custom indicators
+│   └── Scripts/          # Trading scripts
+├── scripts/               # Internal scripts
+└── logs/                  # Application logs
+```
+
+## 🔧 Common Operations
+
+### Check Status
 ```bash
-./view_logs.sh
+./bin/check_status.sh
 ```
 
-## Troubleshooting
+### Deploy New EA
+```bash
+./bin/deploy_ea.sh YourEA.mq4
+```
 
-If MT4 doesn't start:
-1. Check terminal.exe is present
-2. Verify Wine: `docker exec mt4-docker wine --version`
-3. Check logs: `./view_logs.sh`
+### Monitor in Real-time
+```bash
+./bin/monitor.sh
+```
+
+### View Logs
+```bash
+./bin/view_logs.sh
+```
+
+### Connect via VNC
+```bash
+./bin/connect_vnc.sh
+# Server: localhost:5900
+# Password: (from .env)
+```
+
+## 📚 Documentation
+
+- [Setup Guide](docs/guides/SETUP.md) - Detailed installation instructions
+- [Troubleshooting](docs/guides/TROUBLESHOOTING.md) - Common issues and solutions
+- [VNC Guide](docs/guides/VNC_GUIDE.md) - Remote access instructions
+- [Get Demo MT4](docs/guides/GET_DEMO_MT4.md) - How to obtain MT4 terminal
+- [EA Testing](docs/guides/EA_TESTING.md) - Automated EA testing framework
+
+## 🤖 Automated Trading
+
+Once configured, the system runs completely headless:
+- Auto-compiles Expert Advisors
+- Monitors trading activity
+- Logs all operations
+- Supports remote deployment
+
+## 🧪 EA Testing Framework
+
+Test your Expert Advisors with the built-in testing framework:
+
+```bash
+# Test the built-in EATester
+./bin/test_ea.sh EATester ALL
+
+# Test your own EA
+./bin/test_ea.sh YourEA.mq4
+
+# Run specific test suite
+./bin/test_ea.sh EATester PERFORMANCE
+```
+
+Features:
+- Unit testing for EA functions
+- Integration testing
+- Performance benchmarking
+- Test report generation
+- CI/CD integration ready
+
+## 🛡️ Security
+
+- VNC password protected
+- Resource limits enforced
+- Isolated Docker environment
+- No root access in container
+
+## 📊 Resource Limits
+
+- CPU: 2 cores max (0.5 reserved)
+- Memory: 2GB max (512MB reserved)
+- Configurable in docker-compose.yml
+
+## 🔄 Maintenance
+
+```bash
+# Stop services
+docker-compose down
+
+# Clean up
+./bin/cleanup.sh
+
+# Update and restart
+git pull
+./bin/quick_start.sh
+```
+
+## ⚡ Quick Commands
+
+| Command | Description |
+|---------|-------------|
+| `./bin/quick_start.sh` | Initial setup and start |
+| `./bin/check_status.sh` | System health check |
+| `./bin/monitor.sh` | Live monitoring |
+| `./bin/deploy_ea.sh <file>` | Deploy new EA |
+| `./bin/view_logs.sh` | View recent logs |
+| `docker-compose restart` | Restart services |
+
+## 🆘 Need Help?
+
+1. Check [Troubleshooting Guide](docs/guides/TROUBLESHOOTING.md)
+2. Review logs with `./bin/view_logs.sh`
+3. Run diagnostics: `./bin/master_diagnostic.sh`
+
+---
+
+**Note**: First-time setup requires VNC connection to configure broker server. Subsequent operations are fully headless.
