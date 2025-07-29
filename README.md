@@ -5,13 +5,17 @@ This is a complete, automated MT4 Docker setup with auto-compilation and deploym
 ## Prerequisites
 
 - Docker and Docker Compose installed
-- MT4 terminal.exe file
+- MT4 terminal.exe file (see [GET_DEMO_MT4.md](GET_DEMO_MT4.md) for demo options)
 
 ## Quick Start
 
 1. Copy your `terminal.exe` to this directory
-2. Configure your account in `.env`
+2. Copy `.env.example` to `.env` and configure your account
 3. Run: `./quick_start.sh`
+
+For detailed setup instructions, see [SETUP.md](SETUP.md).
+For troubleshooting help, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).
+For VNC access guide, see [VNC_GUIDE.md](VNC_GUIDE.md).
 
 ## Features
 

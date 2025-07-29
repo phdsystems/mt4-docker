@@ -55,6 +55,7 @@ COPY scripts/auto-compile.sh /auto-compile.sh
 COPY config/server-config.ini /mt4/config/server-config.ini
 
 # Copy MT4 files
+COPY terminal.exe /mt4/terminal.exe
 COPY MQL4/ /mt4/MQL4/
 
 # Make scripts executable

@@ -15,10 +15,10 @@ chmod +x scripts/*.sh
 
 # Build and start
 echo "Building Docker image..."
-docker-compose build
+docker compose build
 
 echo "Starting containers..."
-docker-compose up -d
+docker compose up -d
 
 echo "Waiting for services to start..."
 sleep 10

@@ -13,6 +13,7 @@ services:
       - MT4_LOGIN=${MT4_LOGIN}
       - MT4_PASSWORD=${MT4_PASSWORD}
       - MT4_SERVER=${MT4_SERVER}
+      - VNC_PASSWORD=${VNC_PASSWORD:-changeme}
     restart: unless-stopped
     ports:
       - "5900:5900"  # VNC port for debugging
@@ -27,3 +28,11 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M

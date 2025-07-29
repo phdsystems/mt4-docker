@@ -1,0 +1,20 @@
+# Environment files
+.env
+
+# Build artifacts
+build.log
+
+# MT4 logs
+logs/
+*.log
+
+# Compiled EA files
+*.ex4
+
+# MT4 temporary files
+*.dat
+mqlcache.dat
+
+# OS files
+.DS_Store
+Thumbs.db

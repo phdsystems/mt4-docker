@@ -38,7 +38,12 @@ while true; do
             echo "EA Status: $(cat /mt4/MQL4/Files/ea_status.log)"
         fi
     else
-        echo "MT4 not running, waiting..."
+        echo "[$(date)] MT4 not running, waiting..."
+        # Exit if MT4 doesn't start within 5 minutes
+        if [ $SECONDS -gt 300 ]; then
+            echo "ERROR: MT4 failed to start within 5 minutes"
+            exit 1
+        fi
     fi
     
     sleep 60

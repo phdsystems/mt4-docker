@@ -14,7 +14,9 @@ export WINEARCH=win32
 if [ ! -f "/mt4/terminal.exe" ]; then
     echo "ERROR: terminal.exe not found!"
     echo "Please copy terminal.exe to the mt4-docker-complete directory"
-    sleep infinity
+    echo "Container will exit in 30 seconds..."
+    sleep 30
+    exit 1
 fi
 
 cd /mt4
@@ -29,7 +31,15 @@ find /mt4/MQL4 -name "*.mq4" -exec touch {} \;
 
 # Start MT4
 echo "Starting MT4 terminal..."
-wine terminal.exe /portable /config:config.ini
+wine terminal.exe /portable /config:config.ini &
+MT4_PID=$!
 
-# Keep container running
-tail -f /dev/null
+# Monitor MT4 process
+while true; do
+    if ! kill -0 $MT4_PID 2>/dev/null; then
+        echo "[$(date)] MT4 process died, attempting restart..."
+        wine terminal.exe /portable /config:config.ini &
+        MT4_PID=$!
+    fi
+    sleep 30
+done
