@@ -1,0 +1,244 @@
+# Default values for mt4-trading.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+  storageClass: "standard"
+
+# MT4 Terminal configuration
+mt4:
+  enabled: true
+  replicaCount: 1
+  
+  image:
+    repository: mt4-docker
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: ClusterIP
+    vncPort: 5900
+    zmqPort: 5556
+  
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "1000m"
+    limits:
+      memory: "4Gi"
+      cpu: "2000m"
+  
+  persistence:
+    enabled: true
+    size: 50Gi
+    storageClass: "fast-ssd"
+    accessMode: ReadWriteOnce
+  
+  config:
+    server: "demo.metaquotes.net:443"
+    timezone: "UTC"
+    symbols:
+      - EURUSD
+      - GBPUSD
+      - USDJPY
+      - XAUUSD
+
+# API Service configuration
+api:
+  enabled: true
+  replicaCount: 3
+  
+  image:
+    repository: mt4-api
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: ClusterIP
+    port: 5000
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    host: api.mt4.example.com
+    tls:
+      enabled: true
+      secretName: mt4-api-tls
+  
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "250m"
+    limits:
+      memory: "512Mi"
+      cpu: "500m"
+  
+  autoscaling:
+    enabled: true
+    minReplicas: 3
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 70
+    targetMemoryUtilizationPercentage: 80
+  
+  rateLimit:
+    enabled: true
+    requestsPerSecond: 10
+    requestsPerMinute: 100
+
+# WebSocket Service configuration
+websocket:
+  enabled: true
+  replicaCount: 2
+  
+  image:
+    repository: mt4-websocket
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: LoadBalancer
+    port: 8765
+    annotations: {}
+  
+  ingress:
+    enabled: true
+    className: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/websocket-services: "mt4-websocket-service"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    host: ws.mt4.example.com
+    tls:
+      enabled: true
+      secretName: mt4-websocket-tls
+  
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "250m"
+  
+  config:
+    heartbeatInterval: 30
+    maxConnectionsPerClient: 10
+    maxSubscriptionsPerClient: 50
+
+# Redis configuration
+redis:
+  enabled: true
+  auth:
+    enabled: true
+    password: "change-me-in-production"
+  master:
+    persistence:
+      enabled: true
+      size: 10Gi
+  replica:
+    replicaCount: 1
+
+# Monitoring configuration
+prometheus:
+  enabled: true
+  serverFiles:
+    prometheus.yml:
+      scrape_configs:
+        - job_name: mt4-metrics
+          kubernetes_sd_configs:
+            - role: pod
+              namespaces:
+                names:
+                  - mt4-trading
+          relabel_configs:
+            - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+              action: keep
+              regex: true
+
+grafana:
+  enabled: true
+  adminPassword: "change-me-in-production"
+  ingress:
+    enabled: true
+    hosts:
+      - monitor.mt4.example.com
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Prometheus
+          type: prometheus
+          url: http://prometheus-server
+          access: proxy
+          isDefault: true
+
+# ELK Stack configuration
+elasticsearch:
+  enabled: true
+  replicas: 3
+  minimumMasterNodes: 2
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "1000m"
+  volumeClaimTemplate:
+    resources:
+      requests:
+        storage: 200Gi
+
+kibana:
+  enabled: true
+  elasticsearchHosts: "http://elasticsearch:9200"
+  ingress:
+    enabled: true
+    hosts:
+      - host: logs.mt4.example.com
+        paths:
+          - path: /
+
+# Security settings
+security:
+  podSecurityPolicy:
+    enabled: true
+  networkPolicy:
+    enabled: true
+  tls:
+    enabled: true
+    generateCerts: true
+
+# Backup configuration
+backup:
+  enabled: true
+  schedule: "0 2 * * *"
+  retention: 30
+  destination: "s3://your-backup-bucket/mt4-backups/"
+
+# Node affinity and tolerations
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Service Account
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+# Additional environment variables
+env: []
+  # - name: CUSTOM_VAR
+  #   value: "custom_value"
+
+# Additional volumes
+volumes: []
+  # - name: custom-config
+  #   configMap:
+  #     name: custom-config
+
+volumeMounts: []
+  # - name: custom-config
+  #   mountPath: /etc/custom-config

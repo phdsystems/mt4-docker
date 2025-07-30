@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mt4-data-pvc
+  namespace: mt4-trading
+  labels:
+    app: mt4-terminal
+    app.kubernetes.io/name: mt4-data-pvc
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: fast-ssd  # Change based on your cloud provider
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prometheus-data-pvc
+  namespace: mt4-trading
+  labels:
+    app: prometheus
+    app.kubernetes.io/name: prometheus-data-pvc
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: standard
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-data-pvc
+  namespace: mt4-trading
+  labels:
+    app: grafana
+    app.kubernetes.io/name: grafana-data-pvc
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: elasticsearch-data-pvc
+  namespace: mt4-trading
+  labels:
+    app: elasticsearch
+    app.kubernetes.io/name: elasticsearch-data-pvc
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 200Gi
+  storageClassName: fast-ssd
+
+---
+# StorageClass definitions for different cloud providers
+# AWS EBS
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast-ssd
+  labels:
+    app.kubernetes.io/name: fast-ssd
+    app.kubernetes.io/part-of: mt4-trading-system
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp3
+  fsType: ext4
+  encrypted: "true"
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+
+---
+# GCP GCE PD
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast-ssd-gcp
+  labels:
+    app.kubernetes.io/name: fast-ssd-gcp
+    app.kubernetes.io/part-of: mt4-trading-system
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-ssd
+  replication-type: regional-pd
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer
+
+---
+# Azure Disk
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast-ssd-azure
+  labels:
+    app.kubernetes.io/name: fast-ssd-azure
+    app.kubernetes.io/part-of: mt4-trading-system
+provisioner: kubernetes.io/azure-disk
+parameters:
+  storageaccounttype: Premium_LRS
+  kind: Managed
+reclaimPolicy: Retain
+allowVolumeExpansion: true
+volumeBindingMode: WaitForFirstConsumer

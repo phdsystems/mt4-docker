@@ -1,0 +1,23 @@
+{
+  "name": "mt4-websocket-bridge",
+  "version": "1.0.0",
+  "description": "WebSocket bridge for MT4 market data streaming",
+  "main": "websocket_bridge.js",
+  "scripts": {
+    "start": "node websocket_bridge.js",
+    "start:with-client": "node websocket_bridge.js --serve-client",
+    "start:file-mode": "node websocket_bridge.js --file --serve-client"
+  },
+  "dependencies": {
+    "ws": "^8.14.0"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "mt4",
+    "websocket",
+    "trading",
+    "market-data"
+  ],
+  "author": "MT4 Docker",
+  "license": "MIT"
+}

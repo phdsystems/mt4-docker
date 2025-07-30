@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MT4 Market Data WebSocket Demo</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #0a0e27;
+            color: #e4e4e7;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid #1e293b;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .status.connected {
+            background-color: #10b981;
+            color: white;
+        }
+
+        .status.disconnected {
+            background-color: #ef4444;
+            color: white;
+        }
+
+        .controls {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        input, select, button {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background-color: #0f172a;
+            color: #e4e4e7;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+        }
+
+        button {
+            background-color: #3b82f6;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        button:disabled {
+            background-color: #475569;
+            cursor: not-allowed;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .market-data {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tick-card {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tick-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .tick-card.updated {
+            animation: pulse 0.5s ease-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                background-color: #1e293b;
+            }
+            50% {
+                background-color: #334155;
+            }
+            100% {
+                background-color: #1e293b;
+            }
+        }
+
+        .symbol {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 15px;
+        }
+
+        .prices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .price-item {
+            text-align: center;
+        }
+
+        .price-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .price-value {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .bid {
+            color: #ef4444;
+        }
+
+        .ask {
+            color: #10b981;
+        }
+
+        .spread {
+            color: #f59e0b;
+        }
+
+        .timestamp {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .console {
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .console-entry {
+            margin-bottom: 8px;
+            padding: 4px 0;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .console-time {
+            color: #64748b;
+            margin-right: 10px;
+        }
+
+        .console-message {
+            color: #e4e4e7;
+        }
+
+        .console-error {
+            color: #ef4444;
+        }
+
+        .console-success {
+            color: #10b981;
+        }
+
+        .stats {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background-color: #0f172a;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .market-data {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MT4 Market Data WebSocket</h1>
+            <p>Real-time market data streaming demo</p>
+            <span id="status" class="status disconnected">Disconnected</span>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="wsUrl">WebSocket URL</label>
+                <input type="text" id="wsUrl" value="ws://localhost:8765" placeholder="ws://localhost:8765">
+            </div>
+
+            <div class="control-group">
+                <label for="authToken">Authentication Token (Optional)</label>
+                <input type="text" id="authToken" placeholder="JWT token for premium features">
+            </div>
+
+            <div class="control-group">
+                <label for="symbols">Symbols to Subscribe</label>
+                <input type="text" id="symbols" value="EURUSD,GBPUSD,USDJPY" placeholder="EURUSD,GBPUSD,USDJPY">
+            </div>
+
+            <div class="button-group">
+                <button id="connectBtn" onclick="toggleConnection()">Connect</button>
+                <button id="subscribeBtn" onclick="subscribeSymbols()" disabled>Subscribe</button>
+                <button id="unsubscribeBtn" onclick="unsubscribeSymbols()" disabled>Unsubscribe</button>
+                <button id="statsBtn" onclick="getStats()" disabled>Get Stats</button>
+                <button id="clearBtn" onclick="clearConsole()">Clear Console</button>
+            </div>
+        </div>
+
+        <div id="marketData" class="market-data">
+            <!-- Market data cards will be inserted here -->
+        </div>
+
+        <div class="stats" id="statsContainer" style="display: none;">
+            <h3>Server Statistics</h3>
+            <div class="stats-grid" id="statsGrid">
+                <!-- Stats will be inserted here -->
+            </div>
+        </div>
+
+        <h3 style="margin: 20px 0 10px;">Console</h3>
+        <div id="console" class="console">
+            <div class="console-entry">
+                <span class="console-time">00:00:00</span>
+                <span class="console-message">Ready to connect...</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="websocket_client.js"></script>
+    <script>
+        let client = null;
+        let marketData = {};
+        let isConnected = false;
+
+        // UI Elements
+        const statusEl = document.getElementById('status');
+        const connectBtn = document.getElementById('connectBtn');
+        const subscribeBtn = document.getElementById('subscribeBtn');
+        const unsubscribeBtn = document.getElementById('unsubscribeBtn');
+        const statsBtn = document.getElementById('statsBtn');
+        const consoleEl = document.getElementById('console');
+        const marketDataEl = document.getElementById('marketData');
+        const statsContainer = document.getElementById('statsContainer');
+        const statsGrid = document.getElementById('statsGrid');
+
+        function log(message, type = 'message') {
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'console-entry';
+            
+            const timeSpan = document.createElement('span');
+            timeSpan.className = 'console-time';
+            timeSpan.textContent = time;
+            
+            const messageSpan = document.createElement('span');
+            messageSpan.className = `console-${type}`;
+            messageSpan.textContent = message;
+            
+            entry.appendChild(timeSpan);
+            entry.appendChild(messageSpan);
+            
+            consoleEl.appendChild(entry);
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        function clearConsole() {
+            consoleEl.innerHTML = '';
+            log('Console cleared', 'message');
+        }
+
+        function updateStatus(connected) {
+            isConnected = connected;
+            statusEl.textContent = connected ? 'Connected' : 'Disconnected';
+            statusEl.className = `status ${connected ? 'connected' : 'disconnected'}`;
+            
+            connectBtn.textContent = connected ? 'Disconnect' : 'Connect';
+            subscribeBtn.disabled = !connected;
+            unsubscribeBtn.disabled = !connected;
+            statsBtn.disabled = !connected;
+        }
+
+        function createTickCard(symbol) {
+            const card = document.createElement('div');
+            card.className = 'tick-card';
+            card.id = `tick-${symbol}`;
+            card.innerHTML = `
+                <div class="symbol">${symbol}</div>
+                <div class="prices">
+                    <div class="price-item">
+                        <div class="price-label">Bid</div>
+                        <div class="price-value bid" id="bid-${symbol}">-</div>
+                    </div>
+                    <div class="price-item">
+                        <div class="price-label">Ask</div>
+                        <div class="price-value ask" id="ask-${symbol}">-</div>
+                    </div>
+                </div>
+                <div class="price-item" style="margin-top: 15px;">
+                    <div class="price-label">Spread</div>
+                    <div class="price-value spread" id="spread-${symbol}">-</div>
+                </div>
+                <div class="timestamp" id="time-${symbol}">-</div>
+            `;
+            return card;
+        }
+
+        function updateMarketData(data) {
+            const symbol = data.symbol;
+            
+            // Create card if it doesn't exist
+            if (!document.getElementById(`tick-${symbol}`)) {
+                marketDataEl.appendChild(createTickCard(symbol));
+            }
+            
+            // Update values
+            document.getElementById(`bid-${symbol}`).textContent = data.bid.toFixed(5);
+            document.getElementById(`ask-${symbol}`).textContent = data.ask.toFixed(5);
+            document.getElementById(`spread-${symbol}`).textContent = data.spread.toFixed(1);
+            document.getElementById(`time-${symbol}`).textContent = new Date(data.timestamp * 1000).toLocaleTimeString();
+            
+            // Add update animation
+            const card = document.getElementById(`tick-${symbol}`);
+            card.classList.add('updated');
+            setTimeout(() => card.classList.remove('updated'), 500);
+            
+            marketData[symbol] = data;
+        }
+
+        function displayStats(data) {
+            statsContainer.style.display = 'block';
+            statsGrid.innerHTML = '';
+            
+            const stats = [
+                { label: 'Connected Clients', value: data.clients_connected },
+                { label: 'Active Symbols', value: data.symbols_active },
+                { label: 'Total Subscriptions', value: data.total_subscriptions },
+                { label: 'Cache Size', value: data.cache_size }
+            ];
+            
+            // Add tier breakdown
+            if (data.clients_by_tier) {
+                Object.entries(data.clients_by_tier).forEach(([tier, count]) => {
+                    if (count > 0) {
+                        stats.push({ label: `${tier} Clients`, value: count });
+                    }
+                });
+            }
+            
+            stats.forEach(stat => {
+                const item = document.createElement('div');
+                item.className = 'stat-item';
+                item.innerHTML = `
+                    <div class="stat-value">${stat.value}</div>
+                    <div class="stat-label">${stat.label}</div>
+                `;
+                statsGrid.appendChild(item);
+            });
+        }
+
+        async function toggleConnection() {
+            if (isConnected) {
+                // Disconnect
+                if (client) {
+                    client.disconnect();
+                    client = null;
+                }
+                updateStatus(false);
+                log('Disconnected from server', 'message');
+                marketDataEl.innerHTML = '';
+                statsContainer.style.display = 'none';
+            } else {
+                // Connect
+                const url = document.getElementById('wsUrl').value;
+                const token = document.getElementById('authToken').value;
+                
+                client = new MT4WebSocketClient(url, { debug: true });
+                
+                // Register event handlers
+                client.on('welcome', (data) => {
+                    log(`Connected with client ID: ${data.client_id}`, 'success');
+                });
+                
+                client.on('connected', () => {
+                    updateStatus(true);
+                });
+                
+                client.on('disconnected', () => {
+                    updateStatus(false);
+                    log('Disconnected from server', 'error');
+                });
+                
+                client.on('marketData', (data) => {
+                    updateMarketData(data);
+                });
+                
+                client.on('auth_success', (data) => {
+                    log(`Authenticated with tier: ${data.tier}`, 'success');
+                });
+                
+                client.on('auth_failed', (data) => {
+                    log(`Authentication failed: ${data.error}`, 'error');
+                });
+                
+                client.on('subscribed', (data) => {
+                    log(`Subscribed to: ${data.symbols.join(', ')}`, 'success');
+                });
+                
+                client.on('unsubscribed', (data) => {
+                    log(`Unsubscribed from: ${data.symbols.join(', ')}`, 'message');
+                    // Remove cards
+                    data.symbols.forEach(symbol => {
+                        const card = document.getElementById(`tick-${symbol}`);
+                        if (card) card.remove();
+                    });
+                });
+                
+                client.on('error', (data) => {
+                    log(`Error: ${data.error}`, 'error');
+                });
+                
+                client.on('rate_limit', (data) => {
+                    log(`Rate limited! Retry after ${data.retry_after} seconds`, 'error');
+                });
+                
+                client.on('stats', (data) => {
+                    log('Received server statistics', 'success');
+                    displayStats(data.data);
+                });
+                
+                try {
+                    log('Connecting to WebSocket server...', 'message');
+                    await client.connect();
+                    
+                    // Authenticate if token provided
+                    if (token) {
+                        log('Authenticating...', 'message');
+                        await client.authenticate(token);
+                    }
+                    
+                } catch (error) {
+                    log(`Connection failed: ${error.message}`, 'error');
+                    updateStatus(false);
+                }
+            }
+        }
+
+        async function subscribeSymbols() {
+            if (!client || !isConnected) return;
+            
+            const symbols = document.getElementById('symbols').value
+                .split(',')
+                .map(s => s.trim())
+                .filter(s => s);
+            
+            if (symbols.length === 0) {
+                log('No symbols to subscribe', 'error');
+                return;
+            }
+            
+            try {
+                await client.subscribe(symbols);
+            } catch (error) {
+                log(`Subscribe failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function unsubscribeSymbols() {
+            if (!client || !isConnected) return;
+            
+            const symbols = Object.keys(marketData);
+            if (symbols.length === 0) {
+                log('No symbols to unsubscribe', 'error');
+                return;
+            }
+            
+            try {
+                await client.unsubscribe(symbols);
+                marketData = {};
+            } catch (error) {
+                log(`Unsubscribe failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function getStats() {
+            if (!client || !isConnected) return;
+            
+            try {
+                await client.getStats();
+            } catch (error) {
+                log(`Failed to get stats: ${error.message}`, 'error');
+            }
+        }
+
+        // Initialize
+        log('WebSocket client ready', 'success');
+        
+        // Add enter key support for symbols input
+        document.getElementById('symbols').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && isConnected) {
+                subscribeSymbols();
+            }
+        });
+    </script>
+</body>
+</html>

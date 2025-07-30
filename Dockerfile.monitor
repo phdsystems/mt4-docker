@@ -1,0 +1,27 @@
+FROM python:3.9-slim
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install Python packages
+RUN pip install --no-cache-dir \
+    redis \
+    prometheus-client \
+    schedule
+
+# Copy monitoring script
+COPY services/monitoring/rate_limit_monitor.py /app/
+
+# Create non-root user
+RUN useradd -m -u 1000 monitor && \
+    chown -R monitor:monitor /app
+
+USER monitor
+
+EXPOSE 9091
+
+CMD ["python", "rate_limit_monitor.py"]

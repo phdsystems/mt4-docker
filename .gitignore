@@ -18,3 +18,31 @@ mqlcache.dat
 # OS files
 .DS_Store
 Thumbs.db
+
+# Security keys
+keys/
+*.key
+*.key_secret
+*.pem
+*.cert
+*.crt
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# Test coverage
+.coverage
+htmlcov/
+*.cover
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

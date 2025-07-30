@@ -1,0 +1,54 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'mt4-docker'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+# Load rules once and periodically evaluate them
+rule_files:
+  - "alerts/*.yml"
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
+
+  # Node exporter for system metrics
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          service: 'node-exporter'
+
+  # MT4 metrics (custom exporter)
+  - job_name: 'mt4'
+    static_configs:
+      - targets: ['mt4-exporter:9101']
+        labels:
+          service: 'mt4'
+    scrape_interval: 5s
+    metrics_path: '/metrics'
+
+  # ZeroMQ bridge metrics
+  - job_name: 'zeromq-bridge'
+    static_configs:
+      - targets: ['zeromq-bridge:9102']
+        labels:
+          service: 'zeromq-bridge'
+    scrape_interval: 5s
+
+  # Docker container metrics
+  - job_name: 'docker'
+    static_configs:
+      - targets: ['cadvisor:8080']
+        labels:
+          service: 'cadvisor'

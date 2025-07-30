@@ -1,0 +1,43 @@
+{
+    "publish_addresses": [
+        "tcp://*:5556",
+        "tcp://*:5557"
+    ],
+    "mt4": {
+        "data_file": "./data/mt4_data.csv",
+        "update_interval": 1.0,
+        "symbols": ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD"],
+        "buffer_size": 1000
+    },
+    "security": {
+        "enabled": true,
+        "server_secret_key": "./keys/server/mt4_bridge.key_secret",
+        "server_public_key": "./keys/server/mt4_bridge.key",
+        "authorized_clients_dir": "./keys/authorized_clients",
+        "require_client_auth": true,
+        "heartbeat_interval": 30000,
+        "max_silent_time": 60000
+    },
+    "performance": {
+        "high_water_mark": 10000,
+        "send_timeout": 1000,
+        "linger": 0,
+        "tcp_keepalive": true,
+        "tcp_keepalive_idle": 300,
+        "tcp_keepalive_interval": 60
+    },
+    "monitoring": {
+        "enabled": true,
+        "metrics_port": 9090,
+        "health_check_port": 8080,
+        "log_statistics_interval": 30
+    },
+    "resilience": {
+        "auto_reconnect": true,
+        "reconnect_interval": 5000,
+        "max_reconnect_attempts": 10,
+        "circuit_breaker_threshold": 5,
+        "circuit_breaker_timeout": 30000
+    },
+    "log_level": "INFO"
+}

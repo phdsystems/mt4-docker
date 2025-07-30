@@ -1,0 +1,80 @@
+groups:
+  - name: mt4_alerts
+    interval: 30s
+    rules:
+      # MT4 Terminal Health
+      - alert: MT4TerminalDown
+        expr: up{job="mt4"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          service: mt4
+        annotations:
+          summary: "MT4 Terminal is down"
+          description: "MT4 Terminal {{ $labels.instance }} has been down for more than 2 minutes."
+
+      # High CPU Usage
+      - alert: HighCPUUsage
+        expr: rate(process_cpu_seconds_total{job="mt4"}[5m]) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: mt4
+        annotations:
+          summary: "High CPU usage detected"
+          description: "MT4 process CPU usage is above 80% (current value: {{ $value }}%)"
+
+      # High Memory Usage
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes{job="mt4"} / 1024 / 1024 / 1024 > 1.5
+        for: 5m
+        labels:
+          severity: warning
+          service: mt4
+        annotations:
+          summary: "High memory usage detected"
+          description: "MT4 process memory usage is above 1.5GB (current value: {{ $value }}GB)"
+
+      # ZeroMQ Bridge Health
+      - alert: ZeroMQBridgeDown
+        expr: up{job="zeromq-bridge"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          service: zeromq
+        annotations:
+          summary: "ZeroMQ Bridge is down"
+          description: "ZeroMQ Bridge has been down for more than 1 minute."
+
+      # Message Queue Lag
+      - alert: HighMessageQueueLag
+        expr: zeromq_queue_size > 1000
+        for: 2m
+        labels:
+          severity: warning
+          service: zeromq
+        annotations:
+          summary: "High message queue lag"
+          description: "ZeroMQ message queue size is above 1000 (current value: {{ $value }})"
+
+      # Connection Issues
+      - alert: MT4ConnectionLost
+        expr: mt4_connection_status == 0
+        for: 3m
+        labels:
+          severity: critical
+          service: mt4
+        annotations:
+          summary: "MT4 server connection lost"
+          description: "MT4 has lost connection to the trading server for more than 3 minutes."
+
+      # Disk Space
+      - alert: LowDiskSpace
+        expr: node_filesystem_avail_bytes{mountpoint="/mt4"} / node_filesystem_size_bytes{mountpoint="/mt4"} * 100 < 10
+        for: 5m
+        labels:
+          severity: warning
+          service: system
+        annotations:
+          summary: "Low disk space"
+          description: "Less than 10% disk space remaining on /mt4 (current value: {{ $value }}%)"

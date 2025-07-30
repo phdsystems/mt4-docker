@@ -1,0 +1,162 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mt4-api
+  namespace: mt4-trading
+  labels:
+    app: mt4-api
+    app.kubernetes.io/name: mt4-api
+    app.kubernetes.io/part-of: mt4-trading-system
+    app.kubernetes.io/component: rest-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mt4-api
+  template:
+    metadata:
+      labels:
+        app: mt4-api
+        app.kubernetes.io/name: mt4-api
+        app.kubernetes.io/part-of: mt4-trading-system
+        app.kubernetes.io/component: rest-api
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      
+      containers:
+      - name: api
+        image: mt4-api:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+          name: http
+          protocol: TCP
+        
+        env:
+        - name: FLASK_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: mt4-config
+              key: FLASK_ENV
+        - name: REDIS_HOST
+          value: "redis-service"
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: mt4-config
+              key: REDIS_PORT
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mt4-secrets
+              key: REDIS_PASSWORD
+        - name: ADMIN_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: mt4-secrets
+              key: ADMIN_TOKEN
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: mt4-secrets
+              key: JWT_SECRET
+        - name: ZMQ_PUBLISHER
+          value: "tcp://mt4-service:5556"
+        
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          successThreshold: 1
+          failureThreshold: 3
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mt4-api-service
+  namespace: mt4-trading
+  labels:
+    app: mt4-api
+    app.kubernetes.io/name: mt4-api-service
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  type: ClusterIP
+  selector:
+    app: mt4-api
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+    protocol: TCP
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mt4-api-hpa
+  namespace: mt4-trading
+  labels:
+    app: mt4-api
+    app.kubernetes.io/name: mt4-api-hpa
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mt4-api
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 10
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+      - type: Pods
+        value: 4
+        periodSeconds: 15
+      selectPolicy: Max

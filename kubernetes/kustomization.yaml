@@ -1,0 +1,63 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: mt4-trading
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secrets.yaml
+  - persistent-volumes.yaml
+  - redis-deployment.yaml
+  - mt4-deployment.yaml
+  - api-deployment.yaml
+  - websocket-deployment.yaml
+  - monitoring-deployment.yaml
+  - ingress.yaml
+  - network-policies.yaml
+  - jobs.yaml
+
+images:
+  - name: mt4-docker
+    newTag: latest
+  - name: mt4-api
+    newTag: latest
+  - name: mt4-websocket
+    newTag: latest
+
+commonLabels:
+  app.kubernetes.io/managed-by: kustomize
+  app.kubernetes.io/version: "1.0.0"
+  environment: production
+
+replicas:
+  - name: mt4-api
+    count: 3
+  - name: mt4-websocket
+    count: 2
+
+configMapGenerator:
+  - name: mt4-environment
+    envs:
+      - configs/production.env
+
+secretGenerator:
+  - name: mt4-credentials
+    envs:
+      - secrets/production.env
+
+patchesStrategicMerge:
+  - patches/production-resources.yaml
+  - patches/production-replicas.yaml
+
+patches:
+  - target:
+      kind: Deployment
+      labelSelector: "app.kubernetes.io/part-of=mt4-trading-system"
+    patch: |-
+      - op: add
+        path: /spec/template/metadata/annotations
+        value:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "8080"
+          prometheus.io/path: "/metrics"

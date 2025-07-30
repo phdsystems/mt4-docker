@@ -1,0 +1,45 @@
+apiVersion: v2
+name: mt4-trading
+description: MT4 Trading System with ZeroMQ, WebSocket, and REST API
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+keywords:
+  - mt4
+  - trading
+  - zeromq
+  - websocket
+  - forex
+home: https://github.com/your-org/mt4-docker
+sources:
+  - https://github.com/your-org/mt4-docker
+maintainers:
+  - name: Your Team
+    email: team@example.com
+icon: https://example.com/mt4-icon.png
+
+dependencies:
+  - name: redis
+    version: 17.x.x
+    repository: https://charts.bitnami.com/bitnami
+    condition: redis.enabled
+  
+  - name: prometheus
+    version: 19.x.x
+    repository: https://prometheus-community.github.io/helm-charts
+    condition: prometheus.enabled
+  
+  - name: grafana
+    version: 6.x.x
+    repository: https://grafana.github.io/helm-charts
+    condition: grafana.enabled
+  
+  - name: elasticsearch
+    version: 8.x.x
+    repository: https://helm.elastic.co
+    condition: elasticsearch.enabled
+  
+  - name: kibana
+    version: 8.x.x
+    repository: https://helm.elastic.co
+    condition: kibana.enabled

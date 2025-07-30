@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MT4 Market Data Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        #status {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .connected { background-color: #4CAF50; color: white; }
+        .disconnected { background-color: #f44336; color: white; }
+        #data {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .quote {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #2196F3;
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>MT4 Market Data WebSocket Test</h1>
+    <div id="status" class="disconnected">Disconnected</div>
+    <h2>Latest Quotes:</h2>
+    <div id="data">Waiting for data...</div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:8081');
+        const status = document.getElementById('status');
+        const dataDiv = document.getElementById('data');
+        let messageCount = 0;
+
+        ws.onopen = () => {
+            status.textContent = 'Connected';
+            status.className = 'connected';
+            dataDiv.innerHTML = '';
+        };
+
+        ws.onclose = () => {
+            status.textContent = 'Disconnected';
+            status.className = 'disconnected';
+        };
+
+        ws.onerror = (error) => {
+            console.error('WebSocket error:', error);
+            status.textContent = 'Error: ' + error;
+            status.className = 'disconnected';
+        };
+
+        ws.onmessage = (event) => {
+            try {
+                const data = JSON.parse(event.data);
+                messageCount++;
+                
+                // Create or update quote display
+                const quoteId = 'quote-' + data.symbol;
+                let quoteDiv = document.getElementById(quoteId);
+                
+                if (!quoteDiv) {
+                    quoteDiv = document.createElement('div');
+                    quoteDiv.id = quoteId;
+                    quoteDiv.className = 'quote';
+                    dataDiv.appendChild(quoteDiv);
+                }
+                
+                quoteDiv.innerHTML = `
+                    <strong>${data.symbol}</strong> - 
+                    Bid: ${data.bid}, Ask: ${data.ask}, 
+                    Spread: ${data.spread} 
+                    <small>(${new Date(data.timestamp).toLocaleTimeString()})</small>
+                `;
+                
+                // Keep only last 20 quotes
+                while (dataDiv.children.length > 20) {
+                    dataDiv.removeChild(dataDiv.firstChild);
+                }
+                
+                // Update status with message count
+                status.textContent = `Connected - ${messageCount} messages received`;
+            } catch (e) {
+                console.error('Failed to parse message:', e);
+            }
+        };
+    </script>
+</body>
+</html>

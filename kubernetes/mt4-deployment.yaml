@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mt4-terminal
+  namespace: mt4-trading
+  labels:
+    app: mt4-terminal
+    app.kubernetes.io/name: mt4-terminal
+    app.kubernetes.io/part-of: mt4-trading-system
+    app.kubernetes.io/component: trading-terminal
+spec:
+  replicas: 1  # MT4 should run as single instance
+  strategy:
+    type: Recreate  # Ensure only one instance runs at a time
+  selector:
+    matchLabels:
+      app: mt4-terminal
+  template:
+    metadata:
+      labels:
+        app: mt4-terminal
+        app.kubernetes.io/name: mt4-terminal
+        app.kubernetes.io/part-of: mt4-trading-system
+        app.kubernetes.io/component: trading-terminal
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      
+      initContainers:
+      - name: init-mt4
+        image: busybox:1.35
+        command: ['sh', '/scripts/init-mt4.sh']
+        volumeMounts:
+        - name: scripts
+          mountPath: /scripts
+        - name: mt4-data
+          mountPath: /mt4
+        - name: config
+          mountPath: /config
+      
+      containers:
+      - name: mt4
+        image: mt4-docker:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5900
+          name: vnc
+          protocol: TCP
+        - containerPort: 5556
+          name: zmq-pub
+          protocol: TCP
+        
+        env:
+        - name: DISPLAY
+          value: ":1"
+        - name: VNC_PASSWORD
+          value: "vncpassword"
+        - name: MT4_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: mt4-config
+              key: MT4_SERVER
+        - name: MT4_LOGIN
+          valueFrom:
+            secretKeyRef:
+              name: mt4-secrets
+              key: MT4_LOGIN
+        - name: MT4_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mt4-secrets
+              key: MT4_PASSWORD
+        
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - /scripts/health-check.sh
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        
+        readinessProbe:
+          tcpSocket:
+            port: 5556
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        
+        volumeMounts:
+        - name: mt4-data
+          mountPath: /mt4
+        - name: scripts
+          mountPath: /scripts
+        - name: dri
+          mountPath: /dev/dri
+      
+      volumes:
+      - name: mt4-data
+        persistentVolumeClaim:
+          claimName: mt4-data-pvc
+      - name: scripts
+        configMap:
+          name: mt4-scripts
+          defaultMode: 0755
+      - name: config
+        configMap:
+          name: mt4-config
+      - name: dri
+        hostPath:
+          path: /dev/dri
+          type: Directory
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mt4-service
+  namespace: mt4-trading
+  labels:
+    app: mt4-terminal
+    app.kubernetes.io/name: mt4-service
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  type: ClusterIP
+  selector:
+    app: mt4-terminal
+  ports:
+  - name: vnc
+    port: 5900
+    targetPort: 5900
+    protocol: TCP
+  - name: zmq-pub
+    port: 5556
+    targetPort: 5556
+    protocol: TCP

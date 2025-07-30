@@ -1,0 +1,103 @@
+filebeat.inputs:
+  # Docker container logs
+  - type: container
+    enabled: true
+    paths:
+      - '/var/lib/docker/containers/*/*.log'
+    processors:
+      - add_docker_metadata:
+          host: "unix:///var/run/docker.sock"
+      - decode_json_fields:
+          fields: ["message"]
+          target: "json"
+          overwrite_keys: true
+          process_array: false
+          max_depth: 1
+
+  # Application logs
+  - type: log
+    enabled: true
+    paths:
+      - /logs/mt4/*.log
+      - /logs/bridge/*.log
+      - /logs/security/*.log
+    tags: ["mt4", "application"]
+    multiline.pattern: '^\d{4}-\d{2}-\d{2}'
+    multiline.negate: true
+    multiline.match: after
+
+  # Market data logs
+  - type: log
+    enabled: true
+    paths:
+      - /logs/market_data/*.log
+    tags: ["market_data"]
+    json.keys_under_root: true
+    json.add_error_key: true
+
+  # Security logs
+  - type: log
+    enabled: true
+    paths:
+      - /logs/security/*.log
+    tags: ["security", "audit"]
+    fields:
+      log_type: security
+    fields_under_root: true
+
+  # ZeroMQ logs
+  - type: log
+    enabled: true
+    paths:
+      - /logs/zeromq/*.log
+    tags: ["zeromq", "messaging"]
+
+processors:
+  # Add metadata
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  
+  # Add timestamp
+  - timestamp:
+      field: json.timestamp
+      layouts:
+        - '2006-01-02T15:04:05Z'
+        - '2006-01-02T15:04:05.999Z'
+      test:
+        - '2021-12-03T15:04:05Z'
+  
+  # Drop empty events
+  - drop_event:
+      when:
+        or:
+          - equals:
+              message: ""
+          - not:
+              has_fields: ['message']
+
+  # Add fields
+  - add_fields:
+      target: ''
+      fields:
+        environment: production
+        application: mt4-docker
+
+# Output to Logstash
+output.logstash:
+  hosts: ["logstash:5044"]
+  bulk_max_size: 2048
+  worker: 2
+
+# Logging configuration
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
+
+# Monitoring
+monitoring.enabled: true
+monitoring.elasticsearch:
+  hosts: ["elasticsearch:9200"]

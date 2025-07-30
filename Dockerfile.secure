@@ -1,0 +1,91 @@
+# Multi-stage build for security and size optimization
+FROM ubuntu:20.04 AS base
+
+# Set environment variables for non-interactive installation
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=UTC \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8
+
+# Update and install security updates
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    ca-certificates \
+    gnupg \
+    lsb-release \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Wine and dependencies in a single layer
+FROM base AS wine-installer
+RUN dpkg --add-architecture i386 && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    wine64 \
+    wine32 \
+    winbind \
+    xvfb \
+    x11vnc \
+    supervisor \
+    netcat-openbsd \
+    && apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Create non-root user
+RUN groupadd -g 1000 mt4user && \
+    useradd -m -u 1000 -g mt4user -s /bin/bash mt4user && \
+    mkdir -p /mt4 /home/mt4user/.wine && \
+    chown -R mt4user:mt4user /mt4 /home/mt4user
+
+# Final stage
+FROM wine-installer AS final
+
+# Copy only necessary files
+COPY --chown=mt4user:mt4user config/docker/supervisord-secure.conf /etc/supervisor/conf.d/supervisord.conf
+COPY --chown=mt4user:mt4user scripts/start-secure.sh /start.sh
+COPY --chown=mt4user:mt4user scripts/auto-compile.sh /auto-compile.sh
+COPY --chown=mt4user:mt4user config/mt4/server-config.ini /mt4/config/server-config.ini
+COPY --chown=mt4user:mt4user terminal.exe /mt4/terminal.exe
+COPY --chown=mt4user:mt4user MQL4/ /mt4/MQL4/
+
+# Set permissions
+RUN chmod 755 /start.sh /auto-compile.sh && \
+    chmod 644 /etc/supervisor/conf.d/supervisord.conf && \
+    find /mt4 -type d -exec chmod 755 {} \; && \
+    find /mt4 -type f -exec chmod 644 {} \; && \
+    chmod 755 /mt4/terminal.exe
+
+# Create necessary directories with proper permissions
+RUN mkdir -p /mt4/logs /mt4/data /run/supervisor && \
+    chown -R mt4user:mt4user /mt4 /run/supervisor && \
+    chmod 755 /mt4/logs /mt4/data
+
+# Security hardening
+RUN echo "mt4user ALL=(ALL) NOPASSWD: /usr/bin/supervisord" >> /etc/sudoers.d/mt4user && \
+    chmod 0440 /etc/sudoers.d/mt4user && \
+    # Remove unnecessary setuid/setgid binaries
+    find / -perm /6000 -type f -exec chmod a-s {} \; 2>/dev/null || true
+
+# Health check script
+COPY --chown=mt4user:mt4user scripts/healthcheck.sh /healthcheck.sh
+RUN chmod 755 /healthcheck.sh
+
+# Switch to non-root user
+USER mt4user
+WORKDIR /mt4
+
+# Configure Wine (as non-root user)
+ENV WINEARCH=win32 \
+    WINEPREFIX=/home/mt4user/.wine \
+    WINEDEBUG=-all
+
+RUN winecfg || true
+
+# Expose VNC port (will be restricted by docker-compose)
+EXPOSE 5900
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD ["/healthcheck.sh"]
+
+# Use exec form to avoid shell injection
+ENTRYPOINT ["/start.sh"]

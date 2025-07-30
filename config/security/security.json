@@ -1,0 +1,50 @@
+{
+  "elk": {
+    "enabled": true,
+    "host": "logstash",
+    "port": 5000
+  },
+  "auto_update": {
+    "enabled": false,
+    "critical_only": true,
+    "packages": {
+      "system": ["openssl", "openssh-*", "curl", "wget"],
+      "python": ["cryptography", "requests", "urllib3"],
+      "docker_images": ["elasticsearch", "logstash", "kibana"]
+    }
+  },
+  "scanning": {
+    "interval_hours": 6,
+    "severity_threshold": "HIGH",
+    "scan_filesystem": true,
+    "scan_docker": true,
+    "scan_python": true
+  },
+  "notifications": {
+    "enabled": true,
+    "channels": ["webhook", "email", "elk"],
+    "webhook_url": "${SLACK_WEBHOOK_URL}",
+    "email": {
+      "to": "${SECURITY_EMAIL}",
+      "smtp_host": "localhost",
+      "smtp_port": 25
+    },
+    "thresholds": {
+      "critical": 1,
+      "high": 5,
+      "medium": 10
+    }
+  },
+  "reporting": {
+    "enabled": true,
+    "format": "json",
+    "path": "/app/logs/security-report.json",
+    "history_days": 30,
+    "include_fixed": false
+  },
+  "compliance": {
+    "standards": ["CIS", "PCI-DSS", "NIST"],
+    "audit_trail": true,
+    "retention_days": 90
+  }
+}

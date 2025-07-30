@@ -1,0 +1,201 @@
+version: '3.8'
+
+secrets:
+  mt4_login:
+    file: ./secrets/mt4_login.txt
+  mt4_password:
+    file: ./secrets/mt4_password.txt
+  vnc_password:
+    file: ./secrets/vnc_password.txt
+
+services:
+  mt4:
+    build: 
+      context: .
+      dockerfile: Dockerfile.secure
+    container_name: mt4-docker-secure
+    secrets:
+      - mt4_login
+      - mt4_password
+      - vnc_password
+    volumes:
+      - ./MQL4:/mt4/MQL4:ro  # Read-only source
+      - mt4_data:/mt4/data
+      - mt4_logs:/mt4/logs
+      - /dev/null:/mt4/.wine/drive_c/users/root/Temp  # Prevent temp file access
+    environment:
+      - DISPLAY=:99
+      - MT4_SERVER=${MT4_SERVER}
+      - RUN_AS_USER=mt4user
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5900:5900"  # VNC only on localhost
+    networks:
+      - mt4_network
+    security_opt:
+      - no-new-privileges:true
+      - seccomp:unconfined  # Required for Wine
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_PTRACE  # Required for Wine
+      - NET_BIND_SERVICE
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /run
+    healthcheck:
+      test: ["CMD", "pgrep", "-f", "terminal.exe"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "service=mt4"
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  zeromq-bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile.zeromq-secure
+    container_name: zeromq-bridge-secure
+    volumes:
+      - mt4_data:/mt4/data:ro
+      - ./services/zeromq_bridge:/app:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ZMQ_ENCRYPTION=curve
+    networks:
+      - mt4_network
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    user: "1000:1000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import zmq; print('OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "service=zeromq-bridge"
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus:/etc/prometheus:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - "127.0.0.1:9090:9090"
+    networks:
+      - mt4_network
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    user: "65534:65534"  # nobody user
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "service=prometheus"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD__FILE=/run/secrets/grafana_password
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    secrets:
+      - grafana_password
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana_data:/var/lib/grafana
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - mt4_network
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    user: "472:472"  # grafana user
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "service=grafana"
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    command:
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    ports:
+      - "127.0.0.1:9100:9100"
+    networks:
+      - mt4_network
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    user: "65534:65534"  # nobody user
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "service=node-exporter"
+
+volumes:
+  mt4_data:
+  mt4_logs:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  mt4_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+
+secrets:
+  grafana_password:
+    file: ./secrets/grafana_password.txt

@@ -1,0 +1,27 @@
+[Unit]
+Description=MT4 Docker Security Updates
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/mt4-docker/scripts/security_updates.sh
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=mt4-security-updates
+User=root
+Group=root
+
+# Security hardening
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+NoNewPrivileges=yes
+ReadWritePaths=/var/log /var/run /var/cache/apt /var/lib/apt
+
+# Environment variables
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+EnvironmentFile=-/etc/mt4-docker/security-updates.env
+
+[Install]
+WantedBy=multi-user.target

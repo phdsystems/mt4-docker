@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mt4-trading
+  labels:
+    name: mt4-trading
+    app.kubernetes.io/name: mt4-docker
+    app.kubernetes.io/part-of: mt4-trading-system

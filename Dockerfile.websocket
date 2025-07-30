@@ -1,0 +1,36 @@
+FROM python:3.9-slim
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Install Python packages
+RUN pip install --no-cache-dir \
+    websockets \
+    pyzmq \
+    pyjwt \
+    aiohttp
+
+# Copy application code
+COPY services/ /app/services/
+
+# Create non-root user
+RUN useradd -m -u 1000 wsuser && \
+    chown -R wsuser:wsuser /app
+
+USER wsuser
+
+EXPOSE 8765
+
+# Set Python path
+ENV PYTHONPATH=/app
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import websockets; import asyncio; asyncio.run(websockets.connect('ws://localhost:8765'))"
+
+# Run WebSocket server
+CMD ["python", "-m", "services.websocket.websocket_server"]

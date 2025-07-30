@@ -81,6 +81,7 @@ mt4-docker/
 - [VNC Guide](docs/guides/VNC_GUIDE.md) - Remote access instructions
 - [Get Demo MT4](docs/guides/GET_DEMO_MT4.md) - How to obtain MT4 terminal
 - [EA Testing](docs/guides/EA_TESTING.md) - Automated EA testing framework
+- [Market Data Streaming](docs/guides/MARKET_DATA_STREAMING.md) - Stream real-time market data
 
 ## 🤖 Automated Trading
 
@@ -111,6 +112,28 @@ Features:
 - Performance benchmarking
 - Test report generation
 - CI/CD integration ready
+
+## 📊 Market Data Streaming
+
+Stream real-time market data from MT4:
+
+```bash
+# Deploy market data streamer
+./bin/deploy_market_streamer.sh
+
+# Access via Python client
+python3 clients/python/market_data_client.py
+
+# Or via WebSocket
+cd clients/nodejs && npm install && npm start
+```
+
+Streaming options:
+- CSV file export
+- Named pipe (low latency)
+- WebSocket bridge
+- Multiple symbol support
+- Tick and bar data
 
 ## 🛡️ Security
 

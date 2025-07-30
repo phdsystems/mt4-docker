@@ -1,0 +1,52 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: mt4-trading-dev
+
+bases:
+  - ../../
+
+namePrefix: dev-
+nameSuffix: -dev
+
+commonLabels:
+  environment: development
+  
+replicas:
+  - name: mt4-api
+    count: 1
+  - name: mt4-websocket
+    count: 1
+
+patches:
+  - target:
+      kind: Service
+      name: mt4-websocket-service
+    patch: |-
+      - op: replace
+        path: /spec/type
+        value: NodePort
+  
+  - target:
+      kind: PersistentVolumeClaim
+    patch: |-
+      - op: replace
+        path: /spec/resources/requests/storage
+        value: 10Gi
+  
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: 128Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: 100m
+
+configMapGenerator:
+  - name: mt4-config
+    behavior: merge
+    literals:
+      - FLASK_ENV=development
+      - LOG_LEVEL=DEBUG

@@ -1,0 +1,253 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mt4-terminal-network-policy
+  namespace: mt4-trading
+  labels:
+    app.kubernetes.io/name: mt4-terminal-netpol
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  podSelector:
+    matchLabels:
+      app: mt4-terminal
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow VNC connections from admin pods
+  - from:
+    - podSelector:
+        matchLabels:
+          role: admin
+    ports:
+    - protocol: TCP
+      port: 5900
+  
+  # Allow ZeroMQ connections from API and WebSocket pods
+  - from:
+    - podSelector:
+        matchLabels:
+          app: mt4-api
+    - podSelector:
+        matchLabels:
+          app: mt4-websocket
+    ports:
+    - protocol: TCP
+      port: 5556
+  
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow connection to MT4 broker
+  - to:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+        except:
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
+    ports:
+    - protocol: TCP
+      port: 443
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mt4-api-network-policy
+  namespace: mt4-trading
+  labels:
+    app.kubernetes.io/name: mt4-api-netpol
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  podSelector:
+    matchLabels:
+      app: mt4-api
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow traffic from ingress controller
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 5000
+  
+  # Allow traffic from other API pods (for internal communication)
+  - from:
+    - podSelector:
+        matchLabels:
+          app: mt4-api
+    ports:
+    - protocol: TCP
+      port: 5000
+  
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow connection to Redis
+  - to:
+    - podSelector:
+        matchLabels:
+          app: redis
+    ports:
+    - protocol: TCP
+      port: 6379
+  
+  # Allow connection to MT4 terminal (ZeroMQ)
+  - to:
+    - podSelector:
+        matchLabels:
+          app: mt4-terminal
+    ports:
+    - protocol: TCP
+      port: 5556
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mt4-websocket-network-policy
+  namespace: mt4-trading
+  labels:
+    app.kubernetes.io/name: mt4-websocket-netpol
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  podSelector:
+    matchLabels:
+      app: mt4-websocket
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow WebSocket connections from anywhere (through ingress)
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+      port: 8765
+  
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow connection to MT4 terminal (ZeroMQ)
+  - to:
+    - podSelector:
+        matchLabels:
+          app: mt4-terminal
+    ports:
+    - protocol: TCP
+      port: 5556
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: redis-network-policy
+  namespace: mt4-trading
+  labels:
+    app.kubernetes.io/name: redis-netpol
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  podSelector:
+    matchLabels:
+      app: redis
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow connections from API pods only
+  - from:
+    - podSelector:
+        matchLabels:
+          app: mt4-api
+    ports:
+    - protocol: TCP
+      port: 6379
+  
+  egress:
+  # Allow DNS only
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: UDP
+      port: 53
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: monitoring-network-policy
+  namespace: mt4-trading
+  labels:
+    app.kubernetes.io/name: monitoring-netpol
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/component: monitoring
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  # Allow ingress traffic
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    ports:
+    - protocol: TCP
+      port: 9090  # Prometheus
+    - protocol: TCP
+      port: 3000  # Grafana
+  
+  egress:
+  # Allow DNS
+  - to:
+    - namespaceSelector: {}
+    ports:
+    - protocol: UDP
+      port: 53
+  
+  # Allow scraping metrics from all pods in namespace
+  - to:
+    - podSelector: {}
+    ports:
+    - protocol: TCP
+
+---
+# Default deny all traffic
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: mt4-trading
+  labels:
+    app.kubernetes.io/name: default-deny-netpol
+    app.kubernetes.io/part-of: mt4-trading-system
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress

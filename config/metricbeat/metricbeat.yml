@@ -1,0 +1,115 @@
+metricbeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: true
+  reload.period: 10s
+
+# System metrics
+metricbeat.modules:
+  - module: system
+    metricsets:
+      - cpu
+      - load
+      - memory
+      - network
+      - process
+      - process_summary
+      - socket_summary
+      - diskio
+      - filesystem
+      - fsstat
+    enabled: true
+    period: 10s
+    processes: ['.*']
+    process.include_top_n:
+      by_cpu: 5
+      by_memory: 5
+
+  # Docker metrics
+  - module: docker
+    metricsets:
+      - container
+      - cpu
+      - diskio
+      - event
+      - healthcheck
+      - info
+      - memory
+      - network
+    hosts: ["unix:///var/run/docker.sock"]
+    period: 10s
+    enabled: true
+
+  # Elasticsearch metrics
+  - module: elasticsearch
+    metricsets:
+      - node
+      - node_stats
+      - cluster_stats
+      - index
+    period: 10s
+    hosts: ["elasticsearch:9200"]
+    enabled: true
+
+  # Logstash metrics
+  - module: logstash
+    metricsets:
+      - node
+      - node_stats
+    period: 10s
+    hosts: ["logstash:9600"]
+    enabled: true
+
+  # Custom MT4 metrics
+  - module: http
+    metricsets: ["json"]
+    period: 30s
+    hosts: ["http://mt4-bridge:8080/metrics"]
+    namespace: "mt4"
+    enabled: false  # Enable when metrics endpoint is available
+
+processors:
+  # Add metadata
+  - add_host_metadata:
+      netinfo.enabled: true
+  
+  - add_docker_metadata:
+      host: "unix:///var/run/docker.sock"
+  
+  # Add custom fields
+  - add_fields:
+      target: ''
+      fields:
+        environment: production
+        application: mt4-docker
+        service: metricbeat
+
+# Output to Elasticsearch
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+  index: "mt4-metrics-%{+yyyy.MM.dd}"
+  template.name: "mt4-metrics"
+  template.pattern: "mt4-metrics-*"
+  template.settings:
+    index.number_of_shards: 1
+    index.number_of_replicas: 0
+
+# Kibana dashboards
+setup.kibana:
+  host: "kibana:5601"
+  
+setup.dashboards.enabled: true
+setup.dashboards.index: "mt4-metrics-*"
+
+# Logging
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/metricbeat
+  name: metricbeat
+  keepfiles: 7
+  permissions: 0644
+
+# Monitoring
+monitoring.enabled: true
+monitoring.elasticsearch:
+  hosts: ["elasticsearch:9200"]

@@ -1,0 +1,20 @@
+[Unit]
+Description=MT4 Docker Security Updates Timer
+Requires=mt4-security-updates.service
+
+[Timer]
+# Run daily at 3 AM
+OnCalendar=daily
+OnCalendar=*-*-* 03:00:00
+
+# Run on boot if missed
+Persistent=true
+
+# Randomize start time by up to 30 minutes
+RandomizedDelaySec=1800
+
+# Run immediately if system was powered down
+OnBootSec=15min
+
+[Install]
+WantedBy=timers.target

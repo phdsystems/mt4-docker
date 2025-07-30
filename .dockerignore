@@ -1,0 +1,67 @@
+# Git files
+.git
+.gitignore
+.github/
+
+# Documentation
+*.md
+docs/
+LICENSE
+
+# Development files
+*.log
+*.pyc
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Test files
+tests/
+test_*.py
+*_test.py
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+dll_source/build/
+dll_source/zeromq-win32/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment files
+.env
+.env.*
+venv/
+env/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# CI/CD
+.travis.yml
+.gitlab-ci.yml
+azure-pipelines.yml
+
+# Docker files (for multi-stage builds)
+Dockerfile.*
+docker-compose.*.yml
+
+# Secrets (should never be in image)
+*.key
+*.pem
+*.cert
+secrets/

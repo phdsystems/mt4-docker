@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # WebSocket server
+  websocket:
+    build:
+      context: .
+      dockerfile: Dockerfile.websocket
+    container_name: mt4_websocket
+    ports:
+      - "8765:8765"
+    environment:
+      - WS_HOST=0.0.0.0
+      - WS_PORT=8765
+      - ZMQ_PUBLISHER=tcp://mt4:5556
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key}
+      - LOG_LEVEL=INFO
+    depends_on:
+      - mt4
+    networks:
+      - mt4_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import websockets; import asyncio; asyncio.run(websockets.connect('ws://localhost:8765'))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+
+  # Web server for demo
+  web:
+    image: nginx:alpine
+    container_name: mt4_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
+      - ./nginx/websocket.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - mt4_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # WebSocket load balancer (optional for scaling)
+  ws_proxy:
+    image: nginx:alpine
+    container_name: mt4_ws_proxy
+    ports:
+      - "8766:8766"
+    volumes:
+      - ./nginx/ws_proxy.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - websocket
+    networks:
+      - mt4_network
+    restart: unless-stopped
+
+networks:
+  mt4_network:
+    external: true
