@@ -27,8 +27,8 @@ services:
     image: docker.elastic.co/logstash/logstash:8.11.0
     container_name: mt4_logstash
     volumes:
-      - ./config/logstash/pipeline:/usr/share/logstash/pipeline:ro
-      - ./config/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./../../config/logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - ./../../config/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
     ports:
       - "5044:5044"  # Beats input
       - "5000:5000"  # TCP input
@@ -66,10 +66,10 @@ services:
     container_name: mt4_filebeat
     user: root
     volumes:
-      - ./config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./../../config/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./logs:/logs:ro
+      - ./../../logs:/logs:ro
       - filebeat_data:/usr/share/filebeat/data
     networks:
       - elk_network
@@ -86,7 +86,7 @@ services:
     container_name: mt4_metricbeat
     user: root
     volumes:
-      - ./config/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - ./../../config/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /proc:/hostfs/proc:ro

@@ -5,7 +5,7 @@ services:
   websocket:
     build:
       context: .
-      dockerfile: Dockerfile.websocket
+      dockerfile: infra/docker/Dockerfile.websocket
     container_name: mt4_websocket
     ports:
       - "8765:8765"

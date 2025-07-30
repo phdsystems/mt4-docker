@@ -20,8 +20,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY clients/ /app/clients/
-COPY services/ /app/services/
-COPY scripts/ /app/scripts/
+COPY ../../services/ /app/services/
+COPY ../../scripts/ /app/scripts/
 
 # Create directories
 RUN mkdir -p /app/logs /app/keys

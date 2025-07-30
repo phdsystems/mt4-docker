@@ -23,7 +23,7 @@ RUN pip install --no-cache-dir -r requirements.txt \
     gevent
 
 # Copy application code
-COPY services/ /app/services/
+COPY ../../services/ /app/services/
 
 # Create non-root user
 RUN useradd -m -u 1000 apiuser && \

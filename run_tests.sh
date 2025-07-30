@@ -89,10 +89,12 @@ run_integration_tests() {
     
     # Build test image first
     echo -e "\n${YELLOW}Building test image...${NC}"
-    if docker build -t mt4-docker-test . > /dev/null 2>&1; then
+    if docker build -f infra/docker/Dockerfile -t mt4-docker-test . > /dev/null 2>&1; then
         echo -e "${GREEN}Test image built successfully${NC}"
     else
         echo -e "${RED}Failed to build test image${NC}"
+        # Show error for debugging
+        docker build -f infra/docker/Dockerfile -t mt4-docker-test .
         return 1
     fi
     

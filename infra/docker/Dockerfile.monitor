@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir \
     schedule
 
 # Copy monitoring script
-COPY services/monitoring/rate_limit_monitor.py /app/
+COPY ../../services/monitoring/rate_limit_monitor.py /app/
 
 # Create non-root user
 RUN useradd -m -u 1000 monitor && \

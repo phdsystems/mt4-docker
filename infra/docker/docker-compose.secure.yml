@@ -2,24 +2,24 @@ version: '3.8'
 
 secrets:
   mt4_login:
-    file: ./secrets/mt4_login.txt
+    file: ./../../secrets/mt4_login.txt
   mt4_password:
-    file: ./secrets/mt4_password.txt
+    file: ./../../secrets/mt4_password.txt
   vnc_password:
-    file: ./secrets/vnc_password.txt
+    file: ./../../secrets/vnc_password.txt
 
 services:
   mt4:
     build: 
       context: .
-      dockerfile: Dockerfile.secure
+      dockerfile: infra/docker/Dockerfile.secure
     container_name: mt4-docker-secure
     secrets:
       - mt4_login
       - mt4_password
       - vnc_password
     volumes:
-      - ./MQL4:/mt4/MQL4:ro  # Read-only source
+      - ./../../MQL4:/mt4/MQL4:ro  # Read-only source
       - mt4_data:/mt4/data
       - mt4_logs:/mt4/logs
       - /dev/null:/mt4/.wine/drive_c/users/root/Temp  # Prevent temp file access
@@ -68,11 +68,11 @@ services:
   zeromq-bridge:
     build:
       context: .
-      dockerfile: Dockerfile.zeromq-secure
+      dockerfile: infra/docker/Dockerfile.zeromq-secure
     container_name: zeromq-bridge-secure
     volumes:
       - mt4_data:/mt4/data:ro
-      - ./services/zeromq_bridge:/app:ro
+      - ./../../services/zeromq_bridge:/app:ro
     environment:
       - PYTHONUNBUFFERED=1
       - ZMQ_ENCRYPTION=curve
@@ -198,4 +198,4 @@ networks:
 
 secrets:
   grafana_password:
-    file: ./secrets/grafana_password.txt
+    file: ./../../secrets/grafana_password.txt

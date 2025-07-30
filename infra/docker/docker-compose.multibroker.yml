@@ -5,7 +5,7 @@ services:
   broker-manager:
     build:
       context: .
-      dockerfile: Dockerfile.python
+      dockerfile: infra/docker/Dockerfile.python
     container_name: mt4_broker_manager
     command: python -m services.multibroker.broker_manager
     environment:
@@ -13,7 +13,7 @@ services:
       - LOG_LEVEL=INFO
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./services:/app/services
+      - ./../../services:/app/services
       - broker_data:/data
     networks:
       - mt4_network
@@ -25,7 +25,7 @@ services:
   message-recorder:
     build:
       context: .
-      dockerfile: Dockerfile.python
+      dockerfile: infra/docker/Dockerfile.python
     container_name: mt4_message_recorder
     command: python -m services.replay.message_replay record
     environment:
@@ -33,7 +33,7 @@ services:
       - ZMQ_ADDRESS=tcp://mt4:5556
       - LOG_LEVEL=INFO
     volumes:
-      - ./services:/app/services
+      - ./../../services:/app/services
       - recordings:/recordings
     networks:
       - mt4_network
@@ -45,7 +45,7 @@ services:
   message-replay:
     build:
       context: .
-      dockerfile: Dockerfile.python
+      dockerfile: infra/docker/Dockerfile.python
     container_name: mt4_message_replay
     command: python -m services.replay.message_replay replay
     environment:
@@ -55,7 +55,7 @@ services:
     ports:
       - "5559:5559"
     volumes:
-      - ./services:/app/services
+      - ./../../services:/app/services
       - recordings:/recordings
     networks:
       - mt4_network
@@ -65,14 +65,14 @@ services:
   arbitrage-monitor:
     build:
       context: .
-      dockerfile: Dockerfile.python
+      dockerfile: infra/docker/Dockerfile.python
     container_name: mt4_arbitrage_monitor
     command: python -m services.multibroker.arbitrage_monitor
     environment:
       - LOG_LEVEL=INFO
       - ALERT_WEBHOOK=${ALERT_WEBHOOK}
     volumes:
-      - ./services:/app/services
+      - ./../../services:/app/services
     networks:
       - mt4_network
     restart: unless-stopped
@@ -83,7 +83,7 @@ services:
   multibroker-api:
     build:
       context: .
-      dockerfile: Dockerfile.api
+      dockerfile: infra/docker/Dockerfile.api
     container_name: mt4_multibroker_api
     ports:
       - "5001:5001"
@@ -93,7 +93,7 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
     volumes:
-      - ./services:/app/services
+      - ./../../services:/app/services
     networks:
       - mt4_network
     restart: unless-stopped

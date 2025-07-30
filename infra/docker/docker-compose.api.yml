@@ -22,7 +22,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile.api
+      dockerfile: infra/docker/Dockerfile.api
     container_name: mt4_api
     ports:
       - "5000:5000"
@@ -36,7 +36,7 @@ services:
       - redis
       - mt4
     volumes:
-      - ./services:/app/services
+      - ./../../services:/app/services
       - api_logs:/app/logs
     networks:
       - mt4_network
@@ -82,7 +82,7 @@ services:
   rate_limit_monitor:
     build:
       context: .
-      dockerfile: Dockerfile.monitor
+      dockerfile: infra/docker/Dockerfile.monitor
     container_name: mt4_rate_monitor
     environment:
       - REDIS_HOST=redis

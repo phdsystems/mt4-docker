@@ -33,15 +33,15 @@ RUN pip3 install --no-cache-dir \
 RUN mkdir -p /app/scripts /app/logs /app/config
 
 # Copy scripts
-COPY scripts/security_updates.sh /app/scripts/
-COPY scripts/security_monitor.py /app/scripts/
+COPY ../../scripts/security_updates.sh /app/scripts/
+COPY ../../scripts/security_monitor.py /app/scripts/
 RUN chmod +x /app/scripts/*
 
 # Setup cron job
 RUN echo "0 3 * * * /app/scripts/security_updates.sh >> /app/logs/cron.log 2>&1" | crontab -
 
 # Copy entrypoint
-COPY scripts/security_updater_entrypoint.sh /entrypoint.sh
+COPY ../../scripts/security_updater_entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Volume for logs

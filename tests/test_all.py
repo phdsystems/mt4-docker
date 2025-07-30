@@ -130,9 +130,9 @@ class TestDockerConfiguration(TestMT4DockerBase):
     def test_dockerfile_exists(self):
         """Test that Dockerfiles exist"""
         dockerfiles = [
-            "Dockerfile",
-            "Dockerfile.python",
-            "Dockerfile.security-updater"
+            "infra/docker/Dockerfile",
+            "infra/docker/Dockerfile.python",
+            "infra/docker/Dockerfile.security-updater"
         ]
         
         for dockerfile in dockerfiles:
@@ -142,10 +142,10 @@ class TestDockerConfiguration(TestMT4DockerBase):
     def test_docker_compose_files(self):
         """Test Docker Compose files"""
         compose_files = [
-            "docker-compose.yml",
-            "docker-compose.monitoring.yml",
-            "docker-compose.elk.yml",
-            "docker-compose.security.yml"
+            "infra/docker/docker-compose.yml",
+            "infra/docker/docker-compose.elk.yml",
+            "infra/docker/docker-compose.secure.yml",
+            "infra/docker/docker-compose.security.yml"
         ]
         
         for compose_file in compose_files:
@@ -162,7 +162,7 @@ class TestDockerConfiguration(TestMT4DockerBase):
     def test_docker_compose_config(self):
         """Test docker-compose configuration"""
         result = subprocess.run(
-            ["docker-compose", "-f", "docker-compose.yml", "config"],
+            ["docker", "compose", "-f", "infra/docker/docker-compose.yml", "config"],
             cwd=self.project_root,
             capture_output=True,
             text=True
@@ -213,7 +213,7 @@ class TestAutomationScripts(TestMT4DockerBase):
     
     def test_setup_script_exists(self):
         """Test that setup script exists and is executable"""
-        setup_script = self.project_root / "scripts/setup_mt4_zmq.sh"
+        setup_script = self.project_root / "infra/scripts/setup/setup_mt4_zmq.sh"
         self.assertTrue(setup_script.exists(), "Setup script not found")
         self.assertTrue(os.access(setup_script, os.X_OK), "Setup script not executable")
     
@@ -298,7 +298,7 @@ class TestEndToEnd(TestMT4DockerBase):
         
         services_to_check = [
             ("docker", ["docker", "version"]),
-            ("docker-compose", ["docker-compose", "version"]),
+            ("docker compose", ["docker", "compose", "version"]),
             ("python3", ["python3", "--version"]),
         ]
         

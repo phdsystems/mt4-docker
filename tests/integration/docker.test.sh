@@ -22,7 +22,7 @@ setup() {
 
 teardown() {
     # Stop and remove test container
-    docker-compose -p test down -v 2>/dev/null || true
+    docker compose -f infra/docker/docker-compose.yml -p test down -v 2>/dev/null || true
     
     # Clean up test files
     rm -f .env.test
@@ -32,7 +32,7 @@ teardown() {
 
 test_docker_build() {
     # Test if image can be built
-    if docker build -t mt4-docker-test . > /dev/null 2>&1; then
+    if docker build -f infra/docker/Dockerfile -t mt4-docker-test . > /dev/null 2>&1; then
         pass "Docker image builds successfully"
     else
         fail "Docker image build failed"
@@ -42,7 +42,7 @@ test_docker_build() {
 
 test_container_starts() {
     # Start container with test config
-    if docker-compose -p test --env-file .env.test up -d 2>/dev/null; then
+    if docker compose -f infra/docker/docker-compose.yml -p test --env-file .env.test up -d 2>/dev/null; then
         pass "Container starts successfully"
         
         # Wait for container to be ready

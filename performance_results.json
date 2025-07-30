@@ -1,37 +1,37 @@
 {
   "throughput": {
-    "messages_sent": 128193,
-    "messages_received": 128193,
-    "duration": 5.198404550552368,
-    "throughput_sent": 24660.066132478776,
-    "throughput_received": 24660.066132478776,
-    "loss_rate": 0.0
+    "messages_sent": 188381,
+    "messages_received": 188380,
+    "duration": 5.000070095062256,
+    "throughput_sent": 37675.67182428759,
+    "throughput_received": 37675.47182709135,
+    "loss_rate": 0.0005308390973611988
   },
   "latency": {
     "samples": 1000,
-    "min_ms": 0.09566801600158215,
-    "max_ms": 0.5352039588615298,
-    "mean_ms": 0.1323129398515448,
-    "median_ms": 0.12120598694309592,
-    "stdev_ms": 0.03651026169205062,
-    "p95_ms": 0.19790104124695063,
-    "p99_ms": 0.24182803463190794
+    "min_ms": 0.06686500091745984,
+    "max_ms": 0.18519699915486854,
+    "mean_ms": 0.08513741703609412,
+    "median_ms": 0.08319149947055848,
+    "stdev_ms": 0.00797602485599289,
+    "p95_ms": 0.09772999874257948,
+    "p99_ms": 0.11944499965466093
   },
   "serialization": {
     "iterations": 50000,
-    "serialization_total_ms": 202.60015001986176,
-    "serialization_per_msg_us": 4.052003000397235,
-    "deserialization_total_ms": 176.9088899018243,
-    "deserialization_per_msg_us": 3.538177798036486,
-    "total_per_msg_us": 7.590180798433721
+    "serialization_total_ms": 164.19231000145373,
+    "serialization_per_msg_us": 3.2838462000290747,
+    "deserialization_total_ms": 117.4471740014269,
+    "deserialization_per_msg_us": 2.348943480028538,
+    "total_per_msg_us": 5.632789680057613
   },
   "memory": {
     "num_messages": 5000,
-    "initial_memory_mb": 17.515625,
-    "peak_memory_mb": 19.42578125,
-    "final_memory_mb": 18.44140625,
-    "memory_used_mb": 1.91015625,
-    "avg_message_size_bytes": 222.8512,
-    "total_size_mb": 1.0626373291015625
+    "initial_memory_mb": 17.59375,
+    "peak_memory_mb": 19.33984375,
+    "final_memory_mb": 18.57421875,
+    "memory_used_mb": 1.74609375,
+    "avg_message_size_bytes": 222.8214,
+    "total_size_mb": 1.062495231628418
   }
 }

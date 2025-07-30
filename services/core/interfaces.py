@@ -244,6 +244,26 @@ class MarketDataHandler(Protocol):
         ...
 
 
+# Interface version for backward compatibility
+class IMarketDataHandler(ABC):
+    """Interface for market data handlers"""
+    
+    @abstractmethod
+    def on_tick(self, symbol: str, bid: float, ask: float, timestamp: datetime) -> None:
+        """Handle tick data"""
+        pass
+    
+    @abstractmethod
+    def on_bar(self, symbol: str, timeframe: str, ohlcv: Dict[str, float], timestamp: datetime) -> None:
+        """Handle bar data"""
+        pass
+    
+    @abstractmethod
+    def on_error(self, error: Exception) -> None:
+        """Handle error"""
+        pass
+
+
 class ConfigProvider(Protocol):
     """Protocol for configuration providers"""
     
