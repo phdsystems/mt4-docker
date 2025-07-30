@@ -4,6 +4,8 @@ services:
   mt4:
     build: ../..
     container_name: mt4-docker
+    env_file:
+      - ../../.env
     volumes:
       - ./../../MQL4:/mt4/MQL4
       - ./../../logs:/mt4/logs
