@@ -10,6 +10,8 @@ export DISPLAY=:99
 export WINEPREFIX=/root/.wine
 export WINEARCH=win32
 
+# Note: MT4 requires 32-bit Wine even for newer versions
+
 # Check if terminal.exe exists
 if [ ! -f "/mt4/terminal.exe" ]; then
     echo "ERROR: terminal.exe not found!"
