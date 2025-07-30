@@ -115,25 +115,21 @@ Features:
 
 ## 📊 Market Data Streaming
 
-Stream real-time market data from MT4:
+Stream real-time market data from MT4 using DataExporter EA:
 
 ```bash
-# Deploy market data streamer
-./bin/deploy_market_streamer.sh
+# Connect to MT4 via VNC
+./bin/connect_vnc.sh
 
-# Access via Python client
-python3 clients/python/market_data_client.py
-
-# Or via WebSocket
-cd clients/nodejs && npm install && npm start
+# Attach DataExporter EA to any chart
+# Data streams to: /mt4/MQL4/Files/market_data.csv
 ```
 
-Streaming options:
-- CSV file export
-- Named pipe (low latency)
-- WebSocket bridge
+Features:
+- CSV file export (60-second intervals)
 - Multiple symbol support
-- Tick and bar data
+- Production tested and stable
+- See [DataExporter Guide](docs/guides/DATA_EXPORTER.md) for details
 
 ## 🛡️ Security
 
