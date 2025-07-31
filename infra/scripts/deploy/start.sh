@@ -36,6 +36,17 @@ echo "Starting MT4 terminal..."
 wine terminal.exe /portable /config:config.ini &
 MT4_PID=$!
 
+# Resize MT4 window after startup
+sleep 10
+if command -v xdotool >/dev/null 2>&1; then
+    echo "Resizing MT4 window..."
+    WINDOW_ID=$(xdotool search --name "MetaTrader" | head -1)
+    if [ ! -z "$WINDOW_ID" ]; then
+        xdotool windowsize $WINDOW_ID 1900 1060
+        xdotool windowmove $WINDOW_ID 0 0
+    fi
+fi
+
 # Monitor MT4 process
 while true; do
     if ! kill -0 $MT4_PID 2>/dev/null; then
