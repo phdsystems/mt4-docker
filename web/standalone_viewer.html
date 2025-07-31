@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MT4 CSV Data Viewer - Standalone</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .upload-area {
+            border: 2px dashed #3498db;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 20px;
+            background: #ecf0f1;
+        }
+        .upload-area.dragover {
+            background: #d5dbdb;
+        }
+        input[type="file"] {
+            display: none;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #2980b9;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .data-table th {
+            background: #34495e;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        .data-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        #chart {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MT4 CSV Data Viewer</h1>
+        
+        <div class="upload-area" id="uploadArea">
+            <p>Drag & drop CSV files here or click to browse</p>
+            <input type="file" id="fileInput" accept=".csv" multiple>
+            <button class="btn" onclick="document.getElementById('fileInput').click()">
+                Select CSV Files
+            </button>
+        </div>
+
+        <div id="fileList"></div>
+
+        <div class="stats" id="stats" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="totalRows">0</div>
+                <div class="stat-label">Total Rows</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="avgSpread">0</div>
+                <div class="stat-label">Avg Spread (points)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="symbols">0</div>
+                <div class="stat-label">Symbols</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="dateRange">-</div>
+                <div class="stat-label">Date Range</div>
+            </div>
+        </div>
+
+        <canvas id="chart" style="display: none;"></canvas>
+
+        <table class="data-table" id="dataTable" style="display: none;">
+            <thead>
+                <tr id="tableHeaders"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        let allData = [];
+        
+        // Setup drag and drop
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+            Array.from(files).forEach(file => {
+                if (file.type === 'text/csv' || file.name.endsWith('.csv')) {
+                    readCSVFile(file);
+                }
+            });
+        }
+        
+        function readCSVFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const content = e.target.result;
+                const data = parseCSV(content);
+                displayData(data, file.name);
+            };
+            reader.readAsText(file);
+        }
+        
+        function parseCSV(content) {
+            const lines = content.trim().split('\\n');
+            const headers = lines[0].split(',').map(h => h.trim());
+            const data = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                const row = {};
+                headers.forEach((header, index) => {
+                    row[header] = values[index] ? values[index].trim() : '';
+                });
+                data.push(row);
+            }
+            
+            return { headers, data };
+        }
+        
+        function displayData(csvData, filename) {
+            // Update file list
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = `<p>Loaded: <strong>${filename}</strong> (${csvData.data.length} rows)</p>`;
+            
+            // Store data
+            allData = csvData.data;
+            
+            // Show elements
+            document.getElementById('stats').style.display = 'grid';
+            document.getElementById('dataTable').style.display = 'table';
+            document.getElementById('chart').style.display = 'block';
+            
+            // Update stats
+            updateStats(csvData.data);
+            
+            // Display table
+            displayTable(csvData);
+            
+            // Draw chart
+            drawChart(csvData.data);
+        }
+        
+        function updateStats(data) {
+            document.getElementById('totalRows').textContent = data.length;
+            
+            // Calculate average spread
+            let totalSpread = 0;
+            let spreadCount = 0;
+            const uniqueSymbols = new Set();
+            let minDate = null;
+            let maxDate = null;
+            
+            data.forEach(row => {
+                // Try different column names
+                const spread = parseFloat(row.Spread || row.spread || '0');
+                if (!isNaN(spread)) {
+                    totalSpread += spread;
+                    spreadCount++;
+                }
+                
+                const symbol = row.Symbol || row.symbol || row.Pair || row.pair;
+                if (symbol) uniqueSymbols.add(symbol);
+                
+                const time = row.Time || row.DateTime || row.timestamp || row.date;
+                if (time) {
+                    const date = new Date(time);
+                    if (!minDate || date < minDate) minDate = date;
+                    if (!maxDate || date > maxDate) maxDate = date;
+                }
+            });
+            
+            document.getElementById('avgSpread').textContent = 
+                spreadCount > 0 ? (totalSpread / spreadCount).toFixed(1) : '0';
+            document.getElementById('symbols').textContent = uniqueSymbols.size;
+            
+            if (minDate && maxDate) {
+                const format = (date) => date.toLocaleDateString();
+                document.getElementById('dateRange').textContent = 
+                    `${format(minDate)} - ${format(maxDate)}`;
+            }
+        }
+        
+        function displayTable(csvData) {
+            // Display headers
+            const headerRow = document.getElementById('tableHeaders');
+            headerRow.innerHTML = csvData.headers.map(h => `<th>${h}</th>`).join('');
+            
+            // Display first 100 rows
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = csvData.data.slice(0, 100).map(row => 
+                '<tr>' + csvData.headers.map(h => `<td>${row[h] || ''}</td>`).join('') + '</tr>'
+            ).join('');
+        }
+        
+        function drawChart(data) {
+            const canvas = document.getElementById('chart');
+            const ctx = canvas.getContext('2d');
+            
+            // Get canvas size
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 400;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Find bid/ask columns
+            const bidColumn = data[0].Bid !== undefined ? 'Bid' : 'bid';
+            const askColumn = data[0].Ask !== undefined ? 'Ask' : 'ask';
+            
+            // Get price data (last 100 points)
+            const priceData = data.slice(-100).filter(row => row[bidColumn] && row[askColumn]);
+            
+            if (priceData.length === 0) {
+                ctx.fillText('No price data found', canvas.width / 2 - 50, canvas.height / 2);
+                return;
+            }
+            
+            // Calculate min/max
+            const prices = [];
+            priceData.forEach(row => {
+                prices.push(parseFloat(row[bidColumn]));
+                prices.push(parseFloat(row[askColumn]));
+            });
+            const minPrice = Math.min(...prices);
+            const maxPrice = Math.max(...prices);
+            const priceRange = maxPrice - minPrice || 0.0001;
+            
+            // Draw axes
+            const padding = 60;
+            const chartWidth = canvas.width - padding * 2;
+            const chartHeight = canvas.height - padding * 2;
+            
+            ctx.strokeStyle = '#333';
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+            
+            // Draw price labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px sans-serif';
+            for (let i = 0; i <= 5; i++) {
+                const price = minPrice + (priceRange * i / 5);
+                const y = canvas.height - padding - (chartHeight * i / 5);
+                ctx.fillText(price.toFixed(5), 5, y);
+            }
+            
+            // Draw bid line (red)
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            priceData.forEach((row, i) => {
+                const price = parseFloat(row[bidColumn]);
+                const x = padding + (chartWidth * i / (priceData.length - 1));
+                const y = canvas.height - padding - ((price - minPrice) / priceRange * chartHeight);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            
+            // Draw ask line (green)
+            ctx.strokeStyle = '#27ae60';
+            ctx.beginPath();
+            priceData.forEach((row, i) => {
+                const price = parseFloat(row[askColumn]);
+                const x = padding + (chartWidth * i / (priceData.length - 1));
+                const y = canvas.height - padding - ((price - minPrice) / priceRange * chartHeight);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            
+            // Legend
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(canvas.width - 100, 20, 20, 2);
+            ctx.fillStyle = '#333';
+            ctx.fillText('Bid', canvas.width - 70, 25);
+            
+            ctx.fillStyle = '#27ae60';
+            ctx.fillRect(canvas.width - 100, 40, 20, 2);
+            ctx.fillStyle = '#333';
+            ctx.fillText('Ask', canvas.width - 70, 45);
+        }
+    </script>
+</body>
+</html>

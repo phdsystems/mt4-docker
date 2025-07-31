@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mt4-web:
+    image: python:3.9-slim
+    container_name: mt4-web
+    working_dir: /app
+    volumes:
+      - ../../services:/app
+      - ../../web:/web
+      - mt4_data:/mt4/MQL4/Files
+    environment:
+      - FLASK_APP=web_data_server.py
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8081:8080"
+    command: >
+      sh -c "pip install flask flask-cors && 
+             python /app/web_data_server.py"
+    networks:
+      - mt4_network
+
+volumes:
+  mt4_data:
+    name: mt4_data
+
+networks:
+  mt4_network:
+    external: true
+    name: mt4_network

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MT4 Market Data Viewer</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+        .status.connected {
+            background: #27ae60;
+        }
+        .status.disconnected {
+            background: #e74c3c;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+        .price-display {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .bid {
+            color: #e74c3c;
+        }
+        .ask {
+            color: #27ae60;
+        }
+        .spread {
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+        .timestamp {
+            font-size: 12px;
+            color: #95a5a6;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .data-table th {
+            background: #34495e;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        .data-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .controls button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .controls button:hover {
+            background: #2980b9;
+        }
+        .file-list {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .file-item {
+            padding: 8px;
+            border-bottom: 1px solid #ecf0f1;
+            cursor: pointer;
+        }
+        .file-item:hover {
+            background: #f8f9fa;
+        }
+        .chart-container {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            height: 400px;
+        }
+        #chart {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MT4 Market Data Viewer
+                <span id="status" class="status disconnected">Disconnected</span>
+            </h1>
+        </div>
+
+        <div class="controls">
+            <button onclick="refreshData()">Refresh Data</button>
+            <button onclick="toggleAutoRefresh()">
+                <span id="autoRefreshText">Enable</span> Auto-Refresh
+            </button>
+            <button onclick="exportData()">Export Current Data</button>
+            <select id="refreshInterval" onchange="updateRefreshInterval()">
+                <option value="1000">1 second</option>
+                <option value="5000" selected>5 seconds</option>
+                <option value="10000">10 seconds</option>
+                <option value="30000">30 seconds</option>
+            </select>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h2>Current Prices</h2>
+                <div id="currentPrices">
+                    <p>No data available</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Available Data Files</h2>
+                <div id="fileList" class="file-list">
+                    <p>Scanning for CSV files...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Market Data History</h2>
+            <table class="data-table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Symbol</th>
+                        <th>Bid</th>
+                        <th>Ask</th>
+                        <th>Spread</th>
+                    </tr>
+                </thead>
+                <tbody id="dataBody">
+                    <tr>
+                        <td colspan="5" style="text-align: center;">Loading data...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container">
+            <h2>Price Chart</h2>
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        let autoRefresh = false;
+        let refreshTimer = null;
+        let chartData = {
+            labels: [],
+            bids: [],
+            asks: []
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            refreshData();
+            drawChart();
+        });
+
+        function refreshData() {
+            // Update status
+            document.getElementById('status').textContent = 'Refreshing...';
+            
+            // Fetch available CSV files
+            fetchCSVFiles();
+            
+            // Fetch latest data
+            fetchLatestData();
+        }
+
+        function fetchCSVFiles() {
+            // Simulate fetching file list
+            // In production, this would call your API
+            fetch('/api/files')
+                .then(response => response.json())
+                .then(files => {
+                    displayFileList(files);
+                })
+                .catch(error => {
+                    console.error('Error fetching files:', error);
+                    // Display mock data for demo
+                    displayFileList([
+                        { name: 'market_data.csv', size: '2.3 KB', modified: new Date() },
+                        { name: 'EURUSD_M1.csv', size: '15.2 KB', modified: new Date() },
+                        { name: 'export_20250731.csv', size: '8.7 KB', modified: new Date() }
+                    ]);
+                });
+        }
+
+        function displayFileList(files) {
+            const fileList = document.getElementById('fileList');
+            if (files.length === 0) {
+                fileList.innerHTML = '<p>No CSV files found</p>';
+                return;
+            }
+
+            fileList.innerHTML = files.map(file => `
+                <div class="file-item" onclick="loadFile('${file.name}')">
+                    <strong>${file.name}</strong><br>
+                    <span class="timestamp">${file.size} - ${new Date(file.modified).toLocaleString()}</span>
+                </div>
+            `).join('');
+        }
+
+        function fetchLatestData() {
+            // Simulate fetching latest market data
+            // In production, this would read from your CSV files
+            fetch('/api/latest')
+                .then(response => response.json())
+                .then(data => {
+                    displayCurrentPrices(data.prices);
+                    displayDataTable(data.history);
+                    updateChart(data.history);
+                    document.getElementById('status').textContent = 'Connected';
+                    document.getElementById('status').className = 'status connected';
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    // Display mock data for demo
+                    const mockData = generateMockData();
+                    displayCurrentPrices(mockData.prices);
+                    displayDataTable(mockData.history);
+                    updateChart(mockData.history);
+                    document.getElementById('status').textContent = 'Demo Mode';
+                    document.getElementById('status').className = 'status connected';
+                });
+        }
+
+        function generateMockData() {
+            const symbols = ['EURUSD', 'GBPUSD', 'USDJPY', 'AUDUSD'];
+            const prices = {};
+            const history = [];
+
+            // Generate current prices
+            symbols.forEach(symbol => {
+                const base = symbol === 'USDJPY' ? 110 : 1.1;
+                const bid = base + (Math.random() - 0.5) * 0.01;
+                const ask = bid + 0.0002;
+                prices[symbol] = { bid, ask, spread: ((ask - bid) * 10000).toFixed(1) };
+            });
+
+            // Generate history
+            for (let i = 0; i < 20; i++) {
+                const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                const time = new Date(Date.now() - i * 60000);
+                const price = prices[symbol];
+                history.push({
+                    time: time.toISOString(),
+                    symbol: symbol,
+                    bid: (price.bid + (Math.random() - 0.5) * 0.001).toFixed(5),
+                    ask: (price.ask + (Math.random() - 0.5) * 0.001).toFixed(5),
+                    spread: price.spread
+                });
+            }
+
+            return { prices, history };
+        }
+
+        function displayCurrentPrices(prices) {
+            const container = document.getElementById('currentPrices');
+            container.innerHTML = Object.entries(prices).map(([symbol, price]) => `
+                <div style="margin-bottom: 20px;">
+                    <h3>${symbol}</h3>
+                    <div class="price-display">
+                        <span class="bid">${price.bid}</span> / 
+                        <span class="ask">${price.ask}</span>
+                    </div>
+                    <div class="spread">Spread: ${price.spread} points</div>
+                    <div class="timestamp">Updated: ${new Date().toLocaleTimeString()}</div>
+                </div>
+            `).join('');
+        }
+
+        function displayDataTable(history) {
+            const tbody = document.getElementById('dataBody');
+            tbody.innerHTML = history.slice(0, 10).map(row => `
+                <tr>
+                    <td>${new Date(row.time).toLocaleString()}</td>
+                    <td><strong>${row.symbol}</strong></td>
+                    <td class="bid">${row.bid}</td>
+                    <td class="ask">${row.ask}</td>
+                    <td>${row.spread}</td>
+                </tr>
+            `).join('');
+        }
+
+        function updateChart(history) {
+            // Update chart data
+            const latestData = history.slice(0, 20).reverse();
+            chartData.labels = latestData.map(d => new Date(d.time).toLocaleTimeString());
+            chartData.bids = latestData.map(d => parseFloat(d.bid));
+            chartData.asks = latestData.map(d => parseFloat(d.ask));
+            drawChart();
+        }
+
+        function drawChart() {
+            const canvas = document.getElementById('chart');
+            const ctx = canvas.getContext('2d');
+            
+            // Simple line chart
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (chartData.bids.length === 0) return;
+            
+            const padding = 40;
+            const width = canvas.width - padding * 2;
+            const height = canvas.height - padding * 2;
+            
+            // Find min/max
+            const allPrices = [...chartData.bids, ...chartData.asks];
+            const minPrice = Math.min(...allPrices);
+            const maxPrice = Math.max(...allPrices);
+            const priceRange = maxPrice - minPrice || 0.0001;
+            
+            // Draw grid
+            ctx.strokeStyle = '#ecf0f1';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (height * i / 5);
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+            }
+            
+            // Draw bid line
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            chartData.bids.forEach((price, i) => {
+                const x = padding + (width * i / (chartData.bids.length - 1));
+                const y = padding + height - ((price - minPrice) / priceRange * height);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            
+            // Draw ask line
+            ctx.strokeStyle = '#27ae60';
+            ctx.beginPath();
+            chartData.asks.forEach((price, i) => {
+                const x = padding + (width * i / (chartData.asks.length - 1));
+                const y = padding + height - ((price - minPrice) / priceRange * height);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            });
+            ctx.stroke();
+            
+            // Draw labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px sans-serif';
+            ctx.fillText(`${maxPrice.toFixed(5)}`, 5, padding);
+            ctx.fillText(`${minPrice.toFixed(5)}`, 5, canvas.height - padding + 12);
+        }
+
+        function toggleAutoRefresh() {
+            autoRefresh = !autoRefresh;
+            document.getElementById('autoRefreshText').textContent = autoRefresh ? 'Disable' : 'Enable';
+            
+            if (autoRefresh) {
+                const interval = parseInt(document.getElementById('refreshInterval').value);
+                refreshTimer = setInterval(refreshData, interval);
+            } else {
+                clearInterval(refreshTimer);
+            }
+        }
+
+        function updateRefreshInterval() {
+            if (autoRefresh) {
+                clearInterval(refreshTimer);
+                const interval = parseInt(document.getElementById('refreshInterval').value);
+                refreshTimer = setInterval(refreshData, interval);
+            }
+        }
+
+        function loadFile(filename) {
+            console.log('Loading file:', filename);
+            // In production, this would fetch and display the specific file
+            alert(`Loading ${filename}...`);
+        }
+
+        function exportData() {
+            // Export current data as CSV
+            const rows = document.querySelectorAll('#dataTable tbody tr');
+            let csv = 'Time,Symbol,Bid,Ask,Spread\\n';
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const rowData = Array.from(cells).map(cell => cell.textContent).join(',');
+                csv += rowData + '\\n';
+            });
+            
+            // Download CSV
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `mt4_data_${new Date().toISOString()}.csv`;
+            a.click();
+        }
+    </script>
+</body>
+</html>

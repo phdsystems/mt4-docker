@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MT4 Docker Architecture</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #0a0e1a;
+            color: #e0e6ed;
+            overflow-x: auto;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #64ffda;
+        }
+        .architecture-diagram {
+            background: #0f1823;
+            border-radius: 16px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .layer {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #1e3a5f;
+            border-radius: 12px;
+            background: rgba(30, 58, 95, 0.1);
+        }
+        .layer-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #64ffda;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .components {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .component {
+            background: #1a2332;
+            border: 1px solid #2a4158;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .component:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(100, 255, 218, 0.1);
+            border-color: #64ffda;
+        }
+        .component::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #64ffda, #3494e6);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        .component:hover::before {
+            transform: translateX(0);
+        }
+        .component-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .component-name {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .component-desc {
+            font-size: 12px;
+            color: #8892b0;
+        }
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        .flow-item {
+            background: #1a2332;
+            border: 2px solid #2a4158;
+            border-radius: 8px;
+            padding: 15px 25px;
+            margin: 10px;
+            position: relative;
+        }
+        .flow-arrow {
+            color: #64ffda;
+            font-size: 24px;
+            margin: 0 10px;
+        }
+        .data-path {
+            background: #0f1823;
+            border-left: 4px solid #64ffda;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .path-title {
+            font-weight: bold;
+            color: #64ffda;
+            margin-bottom: 10px;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .metric {
+            background: #1a2332;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #2a4158;
+        }
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #64ffda;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #8892b0;
+            margin-top: 5px;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .status-working {
+            background: #00d084;
+        }
+        .status-needs-compile {
+            background: #f39c12;
+        }
+        .status-optional {
+            background: #3498db;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .live {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏗️ MT4 Docker Architecture</h1>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color status-working"></div>
+                <span>Working</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color status-needs-compile"></div>
+                <span>Needs EA Compilation</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color status-optional"></div>
+                <span>Optional/Advanced</span>
+            </div>
+        </div>
+
+        <div class="architecture-diagram">
+            <div class="layer">
+                <div class="layer-title">🖥️ User Interface Layer</div>
+                <div class="components">
+                    <div class="component" style="border-color: #00d084;">
+                        <div class="component-icon">🖥️</div>
+                        <div class="component-name">VNC Viewer</div>
+                        <div class="component-desc">Port 5900<br>Direct MT4 Access</div>
+                    </div>
+                    <div class="component" style="border-color: #00d084;">
+                        <div class="component-icon">🌐</div>
+                        <div class="component-name">Web Data Viewer</div>
+                        <div class="component-desc">Port 8081<br>CSV Visualization</div>
+                    </div>
+                    <div class="component" style="border-color: #3498db;">
+                        <div class="component-icon">📊</div>
+                        <div class="component-name">API Clients</div>
+                        <div class="component-desc">REST/WebSocket<br>Programmatic Access</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">🐳 Container Layer</div>
+                <div class="components">
+                    <div class="component" style="border-color: #00d084;">
+                        <div class="component-icon">🐳</div>
+                        <div class="component-name">Docker Container</div>
+                        <div class="component-desc">Ubuntu 20.04<br>Isolated Environment</div>
+                    </div>
+                    <div class="component" style="border-color: #00d084;">
+                        <div class="component-icon">🍷</div>
+                        <div class="component-name">Wine 32-bit</div>
+                        <div class="component-desc">Windows Emulation<br>MT4 Runtime</div>
+                    </div>
+                    <div class="component" style="border-color: #00d084;">
+                        <div class="component-icon">👁️</div>
+                        <div class="component-name">Supervisor</div>
+                        <div class="component-desc">Process Manager<br>Service Control</div>
+                    </div>
+                    <div class="component" style="border-color: #00d084;">
+                        <div class="component-icon">🖼️</div>
+                        <div class="component-name">Xvfb + X11VNC</div>
+                        <div class="component-desc">Virtual Display<br>Remote Access</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layer">
+                <div class="layer-title">💹 MT4 Application Layer</div>
+                <div class="components">
+                    <div class="component" style="border-color: #00d084;">
+                        <div class="component-icon">💱</div>
+                        <div class="component-name">MT4 Terminal</div>
+                        <div class="component-desc">Trading Platform<br>Chart Analysis</div>
+                    </div>
+                    <div class="component" style="border-color: #f39c12;">
+                        <div class="component-icon">🤖</div>
+                        <div class="component-name">Expert Advisors</div>
+                        <div class="component-desc">DataExporter.mq4<br>Needs Compilation</div>
+                    </div>
+                    <div class="component" style="border-color: #f39c12;">
+                        <div class="component-icon">⚙️</div>
+                        <div class="component-name">MetaEditor</div>
+                        <div class="component-desc">EA Compiler<br>MQL4 IDE</div>
+                    </div>
+                    <div class="component" style="border-color: #3498db;">
+                        <div class="component-icon">📚</div>
+                        <div class="component-name">DLL Library</div>
+                        <div class="component-desc">mt4zmq.dll<br>High Performance</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>📊 Data Export Paths</h2>
+        
+        <div class="data-path">
+            <div class="path-title">✅ Path 1: Manual Export (Working)</div>
+            <div class="flow-diagram">
+                <div class="flow-item">MT4 Terminal</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">F2 History Center</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Export Button</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">CSV File</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item live">Web Viewer</div>
+            </div>
+        </div>
+
+        <div class="data-path">
+            <div class="path-title">⚠️ Path 2: EA Export (Needs Compilation)</div>
+            <div class="flow-diagram">
+                <div class="flow-item">MT4 Terminal</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item" style="border-color: #f39c12;">DataExporter EA</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Auto CSV Export</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">File Monitor</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">Web API</div>
+            </div>
+        </div>
+
+        <div class="data-path">
+            <div class="path-title">🚀 Path 3: DLL Streaming (High Performance)</div>
+            <div class="flow-diagram">
+                <div class="flow-item">MT4 Terminal</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">EA + DLL</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">TCP Socket</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item">ZeroMQ</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-item live">Multi-Subscribers</div>
+            </div>
+        </div>
+
+        <h2>📈 Performance Metrics</h2>
+        
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">1-5s</div>
+                <div class="metric-label">File Export Latency</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">&lt;1ms</div>
+                <div class="metric-label">DLL Stream Latency</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">20k+</div>
+                <div class="metric-label">Msgs/sec (DLL)</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">512MB</div>
+                <div class="metric-label">Memory Usage</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">10-20%</div>
+                <div class="metric-label">CPU (Idle)</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">1920x1080</div>
+                <div class="metric-label">VNC Resolution</div>
+            </div>
+        </div>
+
+        <h2>🔧 Key Components Status</h2>
+        
+        <div class="architecture-diagram">
+            <div class="components">
+                <div class="component" style="border-color: #00d084;">
+                    <div class="component-icon">✅</div>
+                    <div class="component-name">Docker Environment</div>
+                    <div class="component-desc">Fully operational<br>All services running</div>
+                </div>
+                <div class="component" style="border-color: #00d084;">
+                    <div class="component-icon">✅</div>
+                    <div class="component-name">MT4 Terminal</div>
+                    <div class="component-desc">Running with 32-bit Wine<br>VNC accessible</div>
+                </div>
+                <div class="component" style="border-color: #00d084;">
+                    <div class="component-icon">✅</div>
+                    <div class="component-name">Manual Export</div>
+                    <div class="component-desc">F2 → Export working<br>CSV files ready</div>
+                </div>
+                <div class="component" style="border-color: #f39c12;">
+                    <div class="component-icon">⚠️</div>
+                    <div class="component-name">Expert Advisors</div>
+                    <div class="component-desc">Source code ready<br>Needs .ex4 compilation</div>
+                </div>
+                <div class="component" style="border-color: #3498db;">
+                    <div class="component-icon">🔧</div>
+                    <div class="component-name">DLL Streaming</div>
+                    <div class="component-desc">DLL compiled<br>Requires EA integration</div>
+                </div>
+                <div class="component" style="border-color: #00d084;">
+                    <div class="component-icon">✅</div>
+                    <div class="component-name">Web Interface</div>
+                    <div class="component-desc">Fully functional<br>Drag & drop CSV viewer</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
