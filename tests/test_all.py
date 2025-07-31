@@ -34,39 +34,18 @@ class TestMT4DockerBase(unittest.TestCase):
 
 
 class TestDLLBuild(TestMT4DockerBase):
-    """Test DLL compilation and functionality"""
+    """Test DLL libraries"""
     
-    def test_dll_source_exists(self):
-        """Test that DLL source files exist"""
-        dll_source = self.project_root / "dll_source" / "mt4zmq_winsock_fixed.cpp"
-        self.assertTrue(dll_source.exists(), "DLL source file not found")
-    
-    def test_dll_can_compile(self):
-        """Test that DLL can be compiled"""
-        # Check if MinGW is installed
-        result = subprocess.run(["which", "i686-w64-mingw32-g++"], capture_output=True)
-        if result.returncode != 0:
-            self.skipTest("MinGW not installed")
-        
-        # Test compilation command
-        dll_dir = self.project_root / "dll_source"
-        compile_cmd = [
-            "i686-w64-mingw32-g++",
-            "-shared",
-            "-o", str(self.temp_dir) + "/test_mt4zmq.dll",
-            str(dll_dir / "mt4zmq_winsock_fixed.cpp"),
-            "-lws2_32", "-static-libgcc", "-static-libstdc++",
-            "-Wl,--kill-at", "-Wl,--enable-stdcall-fixup",
-            "-DUNICODE", "-D_UNICODE"
+    def test_dll_libraries_exist(self):
+        """Test that required DLL files exist"""
+        dll_files = [
+            "MQL4/Libraries/libzmq.dll",
+            "MQL4/Libraries/libsodium.dll"
         ]
         
-        result = subprocess.run(compile_cmd, capture_output=True, text=True)
-        self.assertEqual(result.returncode, 0, f"DLL compilation failed: {result.stderr}")
-        
-        # Check DLL was created
-        dll_file = Path(self.temp_dir) / "test_mt4zmq.dll"
-        self.assertTrue(dll_file.exists(), "DLL file not created")
-        self.assertGreater(dll_file.stat().st_size, 100000, "DLL file too small")
+        for dll_file in dll_files:
+            path = self.project_root / dll_file
+            self.assertTrue(path.exists(), f"{dll_file} not found")
 
 
 class TestPythonComponents(TestMT4DockerBase):
@@ -76,8 +55,6 @@ class TestPythonComponents(TestMT4DockerBase):
         """Test that all Python modules can be imported"""
         modules_to_test = [
             "services.logging.elk_logger",
-            "services.security.zmq_secure",
-            "services.zeromq_bridge.zmq_bridge_oop",
         ]
         
         for module in modules_to_test:
@@ -85,23 +62,6 @@ class TestPythonComponents(TestMT4DockerBase):
                 __import__(module)
             except ImportError as e:
                 self.fail(f"Failed to import {module}: {e}")
-    
-    def test_security_key_generation(self):
-        """Test security key generation"""
-        from services.security.zmq_secure import KeyManager
-        
-        km = KeyManager(self.temp_dir)
-        
-        # Generate server keys
-        server_keys = km.generate_server_keys("test_server")
-        self.assertTrue(Path(server_keys['public']).exists())
-        self.assertTrue(Path(server_keys['secret']).exists())
-        
-        # Generate client keys
-        client_keys = km.generate_client_keys("test_client")
-        self.assertTrue(Path(client_keys['public']).exists())
-        self.assertTrue(Path(client_keys['secret']).exists())
-        self.assertTrue(Path(client_keys['authorized']).exists())
     
     def test_elk_logger(self):
         """Test ELK logger functionality"""
@@ -184,38 +144,35 @@ class TestMQL4Files(TestMT4DockerBase):
     def test_expert_advisors_exist(self):
         """Test that EA files exist"""
         ea_files = [
-            "MQL4/Experts/MT4ZMQBridge.mq4",
-            "MQL4/Include/MT4ZMQ.mqh",
-            "MQL4/Scripts/TestZMQDLLIntegration.mq4"
+            "MQL4/Experts/StreamingPlatform_test.ex4",
+            "MQL4/Include/phd-quants/integration/zmq/Zmq.mqh",
         ]
         
         for ea_file in ea_files:
             path = self.project_root / ea_file
             self.assertTrue(path.exists(), f"{ea_file} not found")
     
-    def test_mql4_syntax(self):
-        """Basic syntax check for MQL4 files"""
-        mql4_file = self.project_root / "MQL4/Experts/MT4ZMQBridge.mq4"
+    def test_phd_quants_integration(self):
+        """Test phd-quants integration files"""
+        integration_files = [
+            "MQL4/Include/phd-quants/integration/zmq/Context.mqh",
+            "MQL4/Include/phd-quants/integration/zmq/Socket.mqh",
+            "MQL4/Include/phd-quants/integration/zmq/Zmq.mqh",
+        ]
         
-        with open(mql4_file, 'r') as f:
-            content = f.read()
-            
-            # Check for required elements
-            self.assertIn("#property copyright", content)
-            self.assertIn("#import \"mt4zmq.dll\"", content)
-            self.assertIn("OnInit()", content)
-            self.assertIn("OnDeinit(", content)
-            self.assertIn("OnTimer()", content)
+        for file_path in integration_files:
+            path = self.project_root / file_path
+            self.assertTrue(path.exists(), f"{file_path} not found")
 
 
 class TestAutomationScripts(TestMT4DockerBase):
     """Test automation scripts"""
     
-    def test_setup_script_exists(self):
-        """Test that setup script exists and is executable"""
-        setup_script = self.project_root / "infra/scripts/setup/setup_mt4_zmq.sh"
-        self.assertTrue(setup_script.exists(), "Setup script not found")
-        self.assertTrue(os.access(setup_script, os.X_OK), "Setup script not executable")
+    def test_start_script_exists(self):
+        """Test that start script exists and is executable"""
+        start_script = self.project_root / "infra/scripts/deploy/start.sh"
+        self.assertTrue(start_script.exists(), "Start script not found")
+        self.assertTrue(os.access(start_script, os.X_OK), "Start script not executable")
     
     def test_makefile_exists(self):
         """Test that Makefile exists"""

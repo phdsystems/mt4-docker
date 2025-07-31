@@ -1,0 +1,37 @@
+{
+  "throughput": {
+    "messages_sent": 106111,
+    "messages_received": 106111,
+    "duration": 5.11731743812561,
+    "throughput_sent": 20735.668889610006,
+    "throughput_received": 20735.668889610006,
+    "loss_rate": 0.0
+  },
+  "latency": {
+    "samples": 1000,
+    "min_ms": 0.10717899567680433,
+    "max_ms": 1.0006699958466925,
+    "mean_ms": 0.20944224123377353,
+    "median_ms": 0.16810300076031126,
+    "stdev_ms": 0.10366542090607574,
+    "p95_ms": 0.4108119974262081,
+    "p99_ms": 0.5503360007423908
+  },
+  "serialization": {
+    "iterations": 50000,
+    "serialization_total_ms": 288.4805639987462,
+    "serialization_per_msg_us": 5.769611279974924,
+    "deserialization_total_ms": 171.16394200274954,
+    "deserialization_per_msg_us": 3.4232788400549907,
+    "total_per_msg_us": 9.192890120029915
+  },
+  "memory": {
+    "num_messages": 5000,
+    "initial_memory_mb": 17.484375,
+    "peak_memory_mb": 19.296875,
+    "final_memory_mb": 18.5390625,
+    "memory_used_mb": 1.8125,
+    "avg_message_size_bytes": 222.828,
+    "total_size_mb": 1.0625267028808594
+  }
+}

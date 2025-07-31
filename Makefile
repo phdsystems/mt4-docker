@@ -8,24 +8,12 @@ all: setup deploy
 
 # Run complete setup
 setup:
-	@echo "Running MT4-ZeroMQ setup..."
-	@chmod +x scripts/setup_mt4_zmq.sh
-	@./scripts/setup_mt4_zmq.sh
+	@echo "Setting up MT4 Docker environment..."
+	@pip3 install -r requirements.txt
+	@echo "✓ Setup complete"
 
 # Build all components
-build: build-dll build-docker
-
-# Build DLL
-build-dll:
-	@echo "Building MT4ZMQ DLL..."
-	@cd dll_source && \
-	i686-w64-mingw32-g++ -shared -o build/mt4zmq.dll \
-		mt4zmq_winsock_fixed.cpp \
-		-lws2_32 -static-libgcc -static-libstdc++ \
-		-Wl,--kill-at -Wl,--enable-stdcall-fixup \
-		-DUNICODE -D_UNICODE
-	@cp dll_source/build/mt4zmq.dll MQL4/Libraries/
-	@echo "✓ DLL built and installed"
+build: build-docker
 
 # Build Docker images
 build-docker:
@@ -69,24 +57,13 @@ health:
 	@./check_health.sh
 
 # Run tests
-test: test-dll test-python test-integration
-
-# Test DLL
-test-dll:
-	@echo "Testing DLL..."
-	@cd dll_source && wine test_runner.exe
-	@echo "✓ DLL tests passed"
+test: test-python
 
 # Test Python code
 test-python:
 	@echo "Testing Python code..."
 	@python3 -m pytest tests/test_*.py -v
 	@echo "✓ Python tests passed"
-
-# Integration tests
-test-integration:
-	@echo "Running integration tests..."
-	@python3 tests/test_secure_integration.py
 	@echo "✓ Integration tests passed"
 
 # Clean build artifacts

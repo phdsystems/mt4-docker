@@ -1,0 +1,9 @@
+session.screen0.toolbar.visible: false
+session.screen0.fullMaximization: true
+session.screen0.defaultDeco: NORMAL
+session.screen0.windowPlacement: RowMinOverlapPlacement
+session.screen0.focusModel: ClickFocus
+session.screen0.workspaces: 1
+session.screen0.edgeSnapThreshold: 10
+session.screen0.clickRaises: true
+session.screen0.focusNewWindows: true
