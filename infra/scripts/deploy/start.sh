@@ -10,6 +10,11 @@ export DISPLAY=:99
 export WINEPREFIX=/root/.wine
 export WINEARCH=win32
 
+# Wine display fixes
+export WINEDLLOVERRIDES="d3d11=;dxgi="
+export WINEDEBUG=-all
+export WINE_DESKTOP_GEOMETRY=1920x1080
+
 # Note: MT4 requires 32-bit Wine even for newer versions
 
 # Check if terminal.exe exists
