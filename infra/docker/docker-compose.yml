@@ -12,7 +12,6 @@ services:
       - ./../../config/mt4:/mt4/config
     environment:
       - DISPLAY=:99
-      - VNC_PASSWORD=${VNC_PASSWORD:-changeme}
     restart: unless-stopped
     ports:
       - "5900:5900"  # VNC port for debugging
