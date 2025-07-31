@@ -53,6 +53,7 @@ COPY config/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY infra/scripts/deploy/start.sh /start.sh
 COPY scripts/auto-compile.sh /auto-compile.sh
 COPY scripts/sync_experts.sh /sync_experts.sh
+COPY config/mt4/server-config.ini /server-config.ini
 COPY config/mt4/server-config.ini /mt4/config/server-config.ini
 
 # Copy MT4 files

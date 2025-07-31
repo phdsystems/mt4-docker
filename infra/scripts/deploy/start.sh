@@ -34,8 +34,43 @@ if [ -f "/sync_experts.sh" ]; then
 fi
 
 # Create configuration with environment variables
+# First check if server-config.ini exists in config directory (from volume mount)
 if [ -f "/mt4/config/server-config.ini" ]; then
     envsubst < /mt4/config/server-config.ini > /mt4/config.ini
+# If not, use the one from the Docker image
+elif [ -f "/server-config.ini" ]; then
+    envsubst < /server-config.ini > /mt4/config.ini
+else
+    echo "WARNING: server-config.ini not found, creating default config"
+    cat > /mt4/config.ini << EOF
+[Common]
+Login=${MT4_LOGIN}
+Password=${MT4_PASSWORD}
+Server=${MT4_SERVER}
+AutoConfiguration=false
+EnableNews=false
+EnableDDE=false
+EnableOLE=false
+ProxyEnable=false
+
+[Charts]
+ProfileLast=Default
+MaxBars=5000
+SaveDeleted=false
+
+[StartUp]
+Expert=Experts\\StreamingPlatform_test.ex4
+Symbol=EURUSD
+Period=H1
+
+[Experts]
+AllowLiveTrading=true
+AllowDllImports=true
+AllowExternalExperts=false
+AllowWebRequests=false
+AutoConfirmation=true
+DenySafetyConfirm=true
+EOF
 fi
 
 # Touch all .mq4 files to trigger compilation

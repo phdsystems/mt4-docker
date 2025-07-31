@@ -12,13 +12,11 @@ services:
       - ./../../config/mt4:/mt4/config
     environment:
       - DISPLAY=:99
-      - MT4_LOGIN=${MT4_LOGIN}
-      - MT4_PASSWORD=${MT4_PASSWORD}
-      - MT4_SERVER=${MT4_SERVER}
       - VNC_PASSWORD=${VNC_PASSWORD:-changeme}
     restart: unless-stopped
     ports:
       - "5900:5900"  # VNC port for debugging
+      - "32770:32770"  # ZMQ streaming port
     healthcheck:
       test: ["CMD", "pgrep", "-f", "terminal.exe"]
       interval: 30s
