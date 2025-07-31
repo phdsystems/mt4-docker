@@ -28,6 +28,11 @@ fi
 
 cd /mt4
 
+# Clean up old Expert Advisors
+if [ -f "/sync_experts.sh" ]; then
+    /sync_experts.sh
+fi
+
 # Create configuration with environment variables
 if [ -f "/mt4/config/server-config.ini" ]; then
     envsubst < /mt4/config/server-config.ini > /mt4/config.ini

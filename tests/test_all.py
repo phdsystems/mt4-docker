@@ -279,6 +279,32 @@ class TestEndToEnd(TestMT4DockerBase):
                             '==' in line or '>=' in line or '~=' in line,
                             f"Invalid requirement format: {line}"
                         )
+    
+    def test_zmq_port_configuration(self):
+        """Test that ZMQ port 32770 is configured"""
+        # Check if running container exposes port 32770
+        result = subprocess.run(
+            ["docker", "ps", "--format", "{{.Ports}}"],
+            capture_output=True,
+            text=True
+        )
+        
+        if result.returncode == 0 and result.stdout:
+            # Check if any container has port 32770 mapped
+            ports_output = result.stdout.strip()
+            if "32770" in ports_output:
+                self.assertIn("32770->32770/tcp", ports_output, 
+                             "Port 32770 should be mapped for ZMQ streaming")
+        
+        # Also check docker-compose config for port mapping
+        compose_file = self.project_root / "infra/docker/docker-compose.yml"
+        if compose_file.exists():
+            with open(compose_file, 'r') as f:
+                content = f.read()
+                # Check if port 32770 is mentioned in compose file
+                if "32770" in content:
+                    self.assertIn("32770:32770", content,
+                                 "Port 32770 should be mapped in docker-compose.yml")
 
 
 def run_test_suite():

@@ -52,6 +52,7 @@ RUN mkdir -p /mt4/MQL4/Experts \
 COPY config/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY infra/scripts/deploy/start.sh /start.sh
 COPY scripts/auto-compile.sh /auto-compile.sh
+COPY scripts/sync_experts.sh /sync_experts.sh
 COPY config/mt4/server-config.ini /mt4/config/server-config.ini
 
 # Copy MT4 files
@@ -59,7 +60,7 @@ COPY terminal.exe /mt4/terminal.exe
 COPY MQL4/ /mt4/MQL4/
 
 # Make scripts executable
-RUN chmod +x /start.sh /auto-compile.sh
+RUN chmod +x /start.sh /auto-compile.sh /sync_experts.sh
 
 # Expose VNC port for debugging (optional)
 EXPOSE 5900
